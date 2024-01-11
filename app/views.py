@@ -27,8 +27,16 @@ def shop_details(request):
     return render(request,'shop-details.html')
 
 def shop(request):
+    categories = Categories.objects.all()
+    brands = Brands.objects.all()
     product = Product.objects.all()
-    return render(request,'shop.html',{'product':product})
+    categoriesCount = []
+    for c_item in categories:
+        count = Product.objects.filter(category_id = c_item).count()
+       
+        categoriesCount.append(count)
+        
+    return render(request,'shop.html',{'product':product,'categories':categories,'brands':brands})
 
 def shopping_cart(request):
     return render(request,'shopping-cart.html')
