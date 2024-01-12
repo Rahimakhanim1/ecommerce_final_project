@@ -170,14 +170,17 @@
                                         <div class="card-body">
                                             <div class="shop__sidebar__categories">
                                                 <ul class="nice-scroll">
+
+                                               
                                                     
-                                                    {% for c in categories %}
-            
-                                                        <li><a href="#">{{c}}{{product.annotate(Count(c.id))}}</a></li>
-                                                           
-                                                 
-                                                       
-                                                    {% endfor %}
+                                                        {% for c in categories %}
+                
+                                                            <li><a href="{% url 'filterCat' c.id %}">{{c}}</a></li>
+                                                            
+                                                    
+                                                        
+                                                        {% endfor %}
+                                              
                                                     <!-- <li><a href="#">Women (20)</a></li>
                                                     <li><a href="#">Bags (20)</a></li>
                                                     <li><a href="#">Clothing (20)</a></li>
@@ -200,7 +203,7 @@
                                             <div class="shop__sidebar__brand">
                                                 <ul>
                                                     {% for brand in brands %}
-                                                    <li><a href="#">{{brand}}</a></li>
+                                                    <li><a href="{% url 'filterBrand' brand.id %}">{{brand}}</a></li>
                                                     {% endfor %}
                                                     
                                                 </ul>
@@ -378,6 +381,98 @@
                                 </div>
                             </div>
                         </div> -->
+                        
+                     
+                        {% if filterData %}
+                        {% for item in filterData %}
+                        <div class="col-lg-4 col-md-6 col-sm-6">
+                           
+                            <div class="product__item sale">
+                                <div class="product__item__pic set-bg" >
+                                    <img src="{{item.product_image.url}}">
+                    
+                                    <span class="label">Sale</span>
+                                    <ul class="product__hover">
+                                        <li><a href="#"><img src="{% static 'img/icon/heart.png' %}" alt=""></a></li>
+                                        <li><a href="#"><img src="{% static 'img/icon/compare.png' %}" alt=""> <span>Compare</span></a>
+                                        </li>
+                                        <li><a href="#"><img src="{% static 'img/icon/search.png' %}" alt=""></a></li>
+                                    </ul>
+                                </div>
+                                <div class="product__item__text">
+                                    <h6>{{item.product_name}}</h6>
+                                    <a href="#" class="add-cart">+ Add To Cart</a>
+                                    <div class="rating">
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star-o"></i>
+                                    </div>
+                                    <h5>{{item.product_price}}$</h5>
+                                    <div class="product__color__select">
+                                        <label for="pc-7">
+                                            <input type="radio" id="pc-7">
+                                        </label>
+                                        <label class="active black" for="pc-8">
+                                            <input type="radio" id="pc-8">
+                                        </label>
+                                        <label class="grey" for="pc-9">
+                                            <input type="radio" id="pc-9">
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        {% endfor %}
+
+                        {% elif filterBata %}
+               
+                        {% for item in filterBata %}
+                        <div class="col-lg-4 col-md-6 col-sm-6">
+                           
+                            <div class="product__item sale">
+                                <div class="product__item__pic set-bg" >
+                                    <img src="{{item.product_image.url}}">
+                    
+                                    <span class="label">Sale</span>
+                                    <ul class="product__hover">
+                                        <li><a href="#"><img src="{% static 'img/icon/heart.png' %}" alt=""></a></li>
+                                        <li><a href="#"><img src="{% static 'img/icon/compare.png' %}" alt=""> <span>Compare</span></a>
+                                        </li>
+                                        <li><a href="#"><img src="{% static 'img/icon/search.png' %}" alt=""></a></li>
+                                    </ul>
+                                </div>
+                                <div class="product__item__text">
+                                    <h6>{{item.product_name}}</h6>
+                                    <a href="#" class="add-cart">+ Add To Cart</a>
+                                    <div class="rating">
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star-o"></i>
+                                    </div>
+                                    <h5>{{item.product_price}}$</h5>
+                                    <div class="product__color__select">
+                                        <label for="pc-7">
+                                            <input type="radio" id="pc-7">
+                                        </label>
+                                        <label class="active black" for="pc-8">
+                                            <input type="radio" id="pc-8">
+                                        </label>
+                                        <label class="grey" for="pc-9">
+                                            <input type="radio" id="pc-9">
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        {% endfor %}
+
+                     
                         {% for item in product %}
                         <div class="col-lg-4 col-md-6 col-sm-6">
                            
@@ -420,6 +515,11 @@
                         </div>
 
                         {% endfor %}
+
+                        {% endif%}
+                       
+                
+                      
                         <!-- <div class="col-lg-4 col-md-6 col-sm-6">
                             <div class="product__item">
                                 <div class="product__item__pic set-bg" data-setbg="img/product/product-4.jpg">

@@ -17,10 +17,10 @@ class Product(models.Model):
     category = models.ForeignKey(Categories,null = True,on_delete = models.DO_NOTHING)
     brand = models.ForeignKey(Brands,null = True,on_delete = models.DO_NOTHING)
 
+
     def __str__(self):
         return self.product_name
 
 
 
-   
 # Create your models here.

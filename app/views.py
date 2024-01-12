@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from .models import *
+from django.db.models import Q
 
 def index(request):
     return render(request,'index.html')
@@ -35,10 +36,23 @@ def shop(request):
         count = Product.objects.filter(category_id = c_item).count()
        
         categoriesCount.append(count)
+    
         
     return render(request,'shop.html',{'product':product,'categories':categories,'brands':brands})
 
 def shopping_cart(request):
     return render(request,'shopping-cart.html')
+
+def filterCat(request,id):
+    filterData = Product.objects.filter(category_id = id)
+    categories = Categories.objects.all()
+    brands = Brands.objects.all()
+    return render(request,'shop.html',{'filterData':filterData,'categories':categories,'brands':brands})
+
+def filterBrand(request,id):
+    filterBata = Product.objects.filter(brand_id = id)
+    categories = Categories.objects.all()
+    brands = Brands.objects.all()
+    return render(request,'shop.html',{'filterData':filterBata,'categories':categories,'brands':brands})
 
 # Create your views here.
