@@ -42,6 +42,8 @@ def shop(request):
 
 def shopping_cart(request):
     return render(request,'shopping-cart.html')
+def sign_in(request):
+    return render(request,'signin.html')
 
 # def filterCat(request,id):
 #     filterData = Product.objects.filter(category_id = id)
@@ -54,5 +56,7 @@ def shopping_cart(request):
 #     categories = Categories.objects.all()
 #     brands = Brands.objects.all()
 #     return render(request,'shop.html',{'filterData':filterBata,'categories':categories,'brands':brands})
+
+
 
 # Create your views here.
