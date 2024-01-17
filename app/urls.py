@@ -13,6 +13,6 @@ urlpatterns = [
     path('main/',views.main,name='main'),
     path('shop-details/',views.shop_details,name='shop-details'),
     path('shopping-cart/',views.shopping_cart,name='shopping-cart'),
-    path('shop/<int:id>', views.filterCat, name='filterCat'),
-    path('shop/<int:id>', views.filterBrand, name='filterBrand')
+    # path('shop/<int:id>', views.filterCat, name='filterCat'),
+    # path('shop/<int:id>', views.filterBrand, name='filterBrand')
 ]

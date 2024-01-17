@@ -31,11 +31,11 @@ def shop(request):
     categories = Categories.objects.all()
     brands = Brands.objects.all()
     product = Product.objects.all()
-    categoriesCount = []
-    for c_item in categories:
-        count = Product.objects.filter(category_id = c_item).count()
+    # categoriesCount = []
+    # for c_item in categories:
+    #     count = Product.objects.filter(category_id = c_item).count()
        
-        categoriesCount.append(count)
+    #     categoriesCount.append(count)
     
         
     return render(request,'shop.html',{'product':product,'categories':categories,'brands':brands})
@@ -43,16 +43,16 @@ def shop(request):
 def shopping_cart(request):
     return render(request,'shopping-cart.html')
 
-def filterCat(request,id):
-    filterData = Product.objects.filter(category_id = id)
-    categories = Categories.objects.all()
-    brands = Brands.objects.all()
-    return render(request,'shop.html',{'filterData':filterData,'categories':categories,'brands':brands})
+# def filterCat(request,id):
+#     filterData = Product.objects.filter(category_id = id)
+#     categories = Categories.objects.all()
+#     brands = Brands.objects.all()
+#     return render(request,'shop.html',{'filterData':filterData,'categories':categories,'brands':brands})
 
-def filterBrand(request,id):
-    filterBata = Product.objects.filter(brand_id = id)
-    categories = Categories.objects.all()
-    brands = Brands.objects.all()
-    return render(request,'shop.html',{'filterData':filterBata,'categories':categories,'brands':brands})
+# def filterBrand(request,id):
+#     filterBata = Product.objects.filter(brand_id = id)
+#     categories = Categories.objects.all()
+#     brands = Brands.objects.all()
+#     return render(request,'shop.html',{'filterData':filterBata,'categories':categories,'brands':brands})
 
 # Create your views here.
