@@ -1,7 +1,11 @@
 from django.shortcuts import render
 from .models import *
+from django.contrib import messages
 from django.db.models import Q
-
+from django.contrib.auth.models import User ,auth
+from django.contrib.auth import authenticate,get_user_model
+from .models import CustomUser
+User = get_user_model()
 def index(request):
     return render(request,'index.html')
 
@@ -44,7 +48,45 @@ def shopping_cart(request):
     return render(request,'shopping-cart.html')
 def sign_in(request):
     return render(request,'signin.html')
+def register(request):
+    if request.method == 'POST':
 
+        username = request.POST["name"]
+        first_name = request.POST["firstname"]
+        foto = request.FILES["foto"]
+        last_name = request.POST["lastname"]
+        email = request.POST["email"]
+        pass1 = request.POST["password"]
+        pass2 = request.POST["re-password"]
+        telephone = request.POST["tel"]
+        address = request.POST["address"]
+
+        
+        if pass1 == pass2:
+            
+            if CustomUser.objects.filter(username=username).exists():
+                messages.error(request,"Bu istifadəçi hal-hazırda mövcuddur")
+            elif CustomUser.objects.filter(email=email).exists():
+                messages.error(request,"Bu email hal-hazırda mövcuddur")
+            else:
+                
+                CustomUser.objects.create_user(username=username,
+                                               email=email, 
+                                               password=pass1,
+                                               first_name=first_name,
+                                               last_name=last_name,
+                                               img=foto,
+                                               telephone=telephone,
+                                               address = address).save()
+                # return redirect("login")
+                return render(request,"register.html")
+            
+        else:
+            messages.error(request,"Şifrələr uyğun deyil")
+            
+        
+    
+    return render(request,"register.html")
 # def filterCat(request,id):
 #     filterData = Product.objects.filter(category_id = id)
 #     categories = Categories.objects.all()

@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import AbstractUser, AbstractBaseUser
 class Categories(models.Model):
     category = models.CharField(max_length = 50,null = True)
 
@@ -20,6 +21,12 @@ class Product(models.Model):
 
     def __str__(self):
         return self.product_name
+
+
+class CustomUser(AbstractUser):
+    img = models.FileField(upload_to = "images/",null = True, blank = True)
+    telephone = models.IntegerField(null = True,blank = True)
+    address = models.CharField(null = True,blank = True, max_length = 100)
 
 
 
