@@ -14,6 +14,11 @@ urlpatterns = [
     path('shop-details/',views.shop_details,name='shop-details'),
     path('shopping-cart/',views.shopping_cart,name='shopping-cart'),
     path('signin/',views.sign_in, name = 'signin'),
+    path('register/',views.register,name='register'),
+    path('index/',views.signout,name='signout'),
+    path('profile/',views.profile,name='profile'),
+    path('update_item/',views.updateItem,name="update_item")
+
     # path('shop/<int:id>', views.filterCat, name='filterCat'),
     # path('shop/<int:id>', views.filterBrand, name='filterBrand')
 ]

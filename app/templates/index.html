@@ -24,6 +24,38 @@
     <link rel="stylesheet" href="{% static 'css/slicknav.min.css' %}" type="text/css">
     <link rel="stylesheet" href="{% static 'css/style.css' %}" type="text/css">
     <style>
+        .profile-section{
+            color:white;
+            margin-right:25px;
+            position: relative;
+        }
+        .profile-section-li{
+            display: none;
+            position: absolute;
+            width: 100px;
+            height:auto;
+            background-color: white;
+            list-style: none;
+            z-index:100000;
+      
+        }
+        .profile-section-li li{
+            text-align: center !important;
+        }
+        .profile-section-li a{
+            color:black;
+            font-size:15px;
+            line-height:35px;
+            text-align: center !important;
+        }
+        .profile-section:hover .profile-section-li{
+            display: block;
+        }
+       @media (max-width:720px) {
+        .profile-section{
+            color:black;
+        }
+       }
         
     </style>
 </head>
@@ -43,7 +75,20 @@
     <div class="offcanvas-menu-wrapper">
         <div class="offcanvas__option">
             <div class="offcanvas__links">
-                <a href="#">Sign in</a>
+                {% if user.is_authenticated %}
+
+                <span class="profile-section"> <i class="bi bi-person"></i> {{user}}
+                    <ul class="profile-section-li">
+                        <li><a href="{% url 'profile' %}">Profile</a></li>
+                        <li><a href="{% url 'signout' %}">Logout</a></li>
+                        
+                    </ul>
+                </span>
+               
+                {% else %}
+                <a href="{% url 'signin' %}">Sign in</a>
+               
+                {% endif %}
                 <a href="#">FAQs</a>
             </div>
             <div class="offcanvas__top__hover">
@@ -81,12 +126,20 @@
                     <div class="col-lg-6 col-md-5">
                         <div class="header__top__right">
                             <div class="header__top__links">
-                                {% if user %}
-                                <a href="{% url 'signin' %}">Sign in</a>
+                                {% if user.is_authenticated %}
+
+                                <span class="profile-section"> <i class="bi bi-person"></i>{{user}}
+                                    <ul class="profile-section-li">
+                                        <li><a href="{% url 'profile' %}">Profile</a></li>
+                                        <li><a href="{% url 'signout' %}">Logout</a></li>
+                                        
+                                    </ul>
+                                </span>
                                
                                 {% else %}
-                                <a href="{% url 'signin' %}">Sign out</a>
-                                {% endif%}
+                                <a href="{% url 'signin' %}">Sign in</a>
+                               
+                                {% endif %}
                                 <a href="#">FAQs</a>
                             </div>
                             <div class="header__top__hover">
@@ -737,6 +790,8 @@
     <script src="{% static 'js/mixitup.min.js' %}"></script>
     <script src="{% static 'js/owl.carousel.min.js' %}"></script>
     <script src="{% static 'js/main.js' %}"></script>
+    <script src="{% static 'js/cart.js'%}"></script>
+  
 </body>
 
 </html>
