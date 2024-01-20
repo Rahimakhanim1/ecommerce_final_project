@@ -17,7 +17,8 @@ urlpatterns = [
     path('register/',views.register,name='register'),
     path('index/',views.signout,name='signout'),
     path('profile/',views.profile,name='profile'),
-    path('update_item/',views.updateItem,name="update_item")
+    path('update_item/',views.updateItem,name="update_item"),
+    path('shopping-cart/',views.cart,name='cart')
 
     # path('shop/<int:id>', views.filterCat, name='filterCat'),
     # path('shop/<int:id>', views.filterBrand, name='filterBrand')
