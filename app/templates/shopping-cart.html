@@ -110,7 +110,7 @@
     <!-- Offcanvas Menu End -->
 
     <!-- Header Section Begin -->
-   <h1>{{context}}</h1
+  
     <header class="header">
         <div class="header__top">
             <div class="container">
@@ -212,6 +212,9 @@
     <!-- Breadcrumb Section End -->
 
     <!-- Shopping Cart Section Begin -->
+    {{context}}
+    <h1>djffk</h1>
+    {{context.a}}
     <section class="shopping-cart spad">
         <div class="container">
             <div class="row">
@@ -326,7 +329,8 @@
                 <div class="col-lg-4">
                     <div class="cart__discount">
                         <h6>Discount codes</h6>
-                        <form action="#">
+                        <form action="#" method="POST">
+                            {% csrf_token %}
                             <input type="text" placeholder="Coupon code">
                             <button type="submit">Apply</button>
                         </form>

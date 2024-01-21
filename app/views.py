@@ -135,17 +135,33 @@ def cart(request):
 
     return render(request,'shopping-cart.html',context)
 
-def checkout(request):
-    if request.user.is_authenticated:
-        customer = request.user
-        order, created = Order.objects.get_or_create(customer=customer, complete=False)
-        items = order.orderItem_set.all()
-    else:
-        items = []
-        order = {'get_cart_total':0, 'get_cart_items':0 }
-    context = {'items':items, 'order':order}
+# def checkout(request):
+#     if request.user.is_authenticated:
+#         customer = request.user
+#         order, created = Order.objects.get_or_create(customer=customer, complete=False)
+#         items = order.orderItem_set.all()
+#     else:
+#         items = []
+#         order = {'get_cart_total':0, 'get_cart_items':0 }
+#     context = {'items':items, 'order':order}
 
-    return render(request,'shopping-cart.html',context)
+#     return render(request,'shopping-cart.html',context)
+def cart(request):
+    print('isledim')
+    if request.method == 'POST':
+        if request.user.is_authenticated:
+            print('isleyirme')
+            customer = request.user
+            order, created = Order.objects.get_or_create(customer=customer, complete=False)
+            items = order.orderitem_set.all()
+        else:
+            print('islemirem')
+            items = []
+    a = Product.objects.all()
+    context= {'items': items,'a':a}
+    print(context)
+    return render(request, 'shopping-cart.html', context)
+
 def updateItem(request):
     data = ''
     productId =''
@@ -169,8 +185,9 @@ def updateItem(request):
         
         if orderItem.quantity <= 0:
             orderItem.delete()
-    # print('salam')
-    return JsonResponse(data, safe=False )
+        return render(request,'shop.html',{'order':order,'orderItem':orderItem})
+    return render(request,'shop.html',{'order':order,'orderItem':orderItem})
+  
 def profile(request):
     pass
 # def filterCat(request,id):
