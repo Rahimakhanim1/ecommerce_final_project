@@ -9,8 +9,7 @@ from django.http import JsonResponse
 import json
 User = get_user_model()
 
-def index(request):
-    
+def index(request):  
     return render(request,'index.html')
 
 def about(request):
@@ -21,7 +20,6 @@ def blog_details(request):
 
 def blog(request):
     return render(request,'blog.html')
-
 
 def checkout(request):
     return render(request,'checkout.html')
@@ -47,7 +45,19 @@ def shop(request):
     return render(request,'shop.html',{'product':product,'categories':categories,'brands':brands})
 
 def shopping_cart(request):
-    return render(request,'shopping-cart.html')
+    items= ''
+    if request.user.is_authenticated:
+            print('isleyirme')
+            customer = request.user
+            order, created = Order.objects.get_or_create(customer=customer, complete=False)
+            items = order.orderitem_set.all()
+            print(items)
+    else:
+            print('islemirem')
+            items = []
+    context= {'items': items}
+    return render(request, 'shopping-cart.html', context)
+
 def sign_in(request):
     Customuser = CustomUser.objects.all()
     if request.method == 'POST':       
@@ -123,17 +133,17 @@ def signout(request):
 #     context = {'products' : products}
 #     return render(request, 'shop.html',context)
 
-def cart(request):
-    if request.user.is_authenticated:
-        customer = request.user
-        order, created = Order.objects.get_or_create(customer=customer, complete=False)
-        items = order.orderItem_set.all()
-    else:
-        items = []
-        order = {'get_cart_total':0, 'get_cart_items':0 }
-    context = {'items':items, 'order':order}
+# def cart(request):
+#     if request.user.is_authenticated:
+#         customer = request.user
+#         order, created = Order.objects.get_or_create(customer=customer, complete=False)
+#         items = order.orderItem_set.all()
+#     else:
+#         items = []
+#         order = {'get_cart_total':0, 'get_cart_items':0 }
+#     context = {'items':items, 'order':order}
 
-    return render(request,'shopping-cart.html',context)
+#     return render(request,'shopping-cart.html',context)
 
 # def checkout(request):
 #     if request.user.is_authenticated:
@@ -146,21 +156,22 @@ def cart(request):
 #     context = {'items':items, 'order':order}
 
 #     return render(request,'shopping-cart.html',context)
-def cart(request):
-    print('isledim')
-    if request.method == 'POST':
-        if request.user.is_authenticated:
-            print('isleyirme')
-            customer = request.user
-            order, created = Order.objects.get_or_create(customer=customer, complete=False)
-            items = order.orderitem_set.all()
-        else:
-            print('islemirem')
-            items = []
-    a = Product.objects.all()
-    context= {'items': items,'a':a}
-    print(context)
-    return render(request, 'shopping-cart.html', context)
+# def cart(request):
+#     items= ''
+#     print('isledim')
+#     if request.method == 'POST':
+#         if request.user.is_authenticated:
+#             print('isleyirme')
+#             customer = request.user
+#             order, created = Order.objects.get_or_create(customer=customer, complete=False)
+#             items = order.orderitem_set.all()
+#         else:
+#             print('islemirem')
+#             items = []
+#     a = Product.objects.all()
+#     context= {'items': items,'a':a}
+#     print(context)
+#     return render(request, 'shopping-cart.html', context)
 
 def updateItem(request):
     data = ''

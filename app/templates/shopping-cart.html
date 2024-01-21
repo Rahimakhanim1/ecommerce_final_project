@@ -212,9 +212,7 @@
     <!-- Breadcrumb Section End -->
 
     <!-- Shopping Cart Section Begin -->
-    {{context}}
-    <h1>djffk</h1>
-    {{context.a}}
+ 
     <section class="shopping-cart spad">
         <div class="container">
             <div class="row">
@@ -230,27 +228,30 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                {% for item in items%}
                                 <tr>
                                     <td class="product__cart__item">
                                         <div class="product__cart__item__pic">
-                                            <img src="{% static 'img/shopping-cart/cart-1.jpg' %}" alt="">
+                                            <img src="{{item.product.product_image.url}}" width='100' height='100' alt="">
                                         </div>
                                         <div class="product__cart__item__text">
-                                            <h6>T-shirt Contrast Pocket</h6>
-                                            <h5>$98.49</h5>
+                                            <h6>{{item.product.product_name}}</h6>
+                                            <h5>${{item.product.product_price}}</h5>
                                         </div>
                                     </td>
                                     <td class="quantity__item">
                                         <div class="quantity">
                                             <div class="pro-qty-2">
-                                                <input type="text" value="1">
+                                            
+                                                <input type="text" value="{{item.quantity}}">
                                             </div>
                                         </div>
                                     </td>
-                                    <td class="cart__price">$ 30.00</td>
+                                    <td class="cart__price">$ {{item.get_total}}</td>
                                     <td class="cart__close"><i class="fa fa-close"></i></td>
                                 </tr>
-                                <tr>
+                                {% endfor %}
+                                <!-- <tr>
                                     <td class="product__cart__item">
                                         <div class="product__cart__item__pic">
                                             <img src="{% static 'img/shopping-cart/cart-2.jpg' %}" alt="">
@@ -309,7 +310,7 @@
                                     </td>
                                     <td class="cart__price">$ 30.00</td>
                                     <td class="cart__close"><i class="fa fa-close"></i></td>
-                                </tr>
+                                </tr> -->
                             </tbody>
                         </table>
                     </div>

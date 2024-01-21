@@ -14,7 +14,7 @@ class Brands(models.Model):
     
 class Product(models.Model):
     product_name = models.CharField(max_length = 100)
-    product_price = models.CharField(max_length = 100)
+    product_price = models.IntegerField(blank = True)
     product_image = models.FileField(upload_to = 'images/')
     category = models.ForeignKey(Categories,null = True,on_delete = models.DO_NOTHING)
     brand = models.ForeignKey(Brands,null = True,on_delete = models.DO_NOTHING)
@@ -65,6 +65,6 @@ class OrderItem(models.Model):
 
     @property
     def get_total(self):
-        total = self.product.price * self.quantity 
+        total = self.product.product_price * self.quantity 
         return total
 # Create your models here.
