@@ -100,7 +100,7 @@
             <a href="#" class="search-switch"><img src="{% static 'img/icon/search.png' %}" alt=""></a>
             <a href="#"><img src="{% static 'img/icon/heart.png' %}" alt=""></a>
             <a href="#"><img src="{% static 'img/icon/cart.png' %}" alt=""> <span>0</span></a>
-            <div class="price">$0.00</div>
+            <div class="price">${{order.get_cart_total}}</div>
         </div>
         <div id="mobile-menu-wrap"></div>
         <div class="offcanvas__text">
@@ -183,7 +183,7 @@
                         <a href="#" class="search-switch"><img src="{% static 'img/icon/search.png' %}" alt=""></a>
                         <a href="#"><img src="{% static 'img/icon/heart.png' %}" alt=""></a>
                         <a href="#"><img src="{% static 'img/icon/cart.png' %}" alt=""> <span>0</span></a>
-                        <div class="price">$0.00</div>
+                        <div class="price">${{order.get_cart_total}}</div>
                     </div>
                 </div>
             </div>
@@ -229,6 +229,7 @@
                             </thead>
                             <tbody>
                                 {% for item in items%}
+                                
                                 <tr>
                                     <td class="product__cart__item">
                                         <div class="product__cart__item__pic">
@@ -248,7 +249,7 @@
                                         </div>
                                     </td>
                                     <td class="cart__price">$ {{item.get_total}}</td>
-                                    <td class="cart__close"><i class="fa fa-close"></i></td>
+                                    <td class="cart__close"><a href="{% url 'update_item_shopping_cart' %}" class="update-cart" data-product='{{item.product.id}}' data-action="remove"><i class="fa fa-close"></i></a></td>
                                 </tr>
                                 {% endfor %}
                                 <!-- <tr>
@@ -339,8 +340,8 @@
                     <div class="cart__total">
                         <h6>Cart total</h6>
                         <ul>
-                            <li>Subtotal <span>$ 169.50</span></li>
-                            <li>Total <span>$ 169.50</span></li>
+                            <li>Subtotal <span>$ {{order.get_cart_total}}</span></li>
+                            <li>Total <span>$ {{order.get_cart_total}}</span></li>
                         </ul>
                         <a href="#" class="primary-btn">Proceed to checkout</a>
                     </div>
@@ -439,6 +440,32 @@
     <script src="{% static 'js/mixitup.min.js' %}"></script>
     <script src="{% static 'js/owl.carousel.min.js' %}"></script>
     <script src="{% static 'js/main.js' %}"></script>
+    <script src="{% static 'js/cart.js'%}"></script>
+    <script type="text/javascript">
+        var user = '{{request.user}}';
+  
+    
+        function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+    // const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+const csrftoken = getCookie('csrftoken');
+//         console.log(csrftoken)
+
+
+    </script>
 </body>
 
 </html>

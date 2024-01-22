@@ -18,6 +18,7 @@ urlpatterns = [
     path('index/',views.signout,name='signout'),
     path('profile/',views.profile,name='profile'),
     path('update_item/',views.updateItem,name="update_item"),
+    path('update_item_shopping_cart/',views.updateItemForShoppingCart,name="update_item_shopping_cart")
 
 
     # path('shop/<int:id>', views.filterCat, name='filterCat'),

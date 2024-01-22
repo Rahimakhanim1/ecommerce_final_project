@@ -182,7 +182,7 @@
                         <a href="#" class="search-switch"><img src="{% static 'img/icon/search.png' %}" alt=""></a>
                         <a href="#"><img src="{% static 'img/icon/heart.png' %}" alt=""></a>
                         <a href="#"><img src="{% static 'img/icon/cart.png' %}" alt=""> <span>0</span></a>
-                        <div class="price">{{order}}</div>
+                        <div class="price">${{order.get_cart_total}}</div>
                     </div>
                 </div>
             </div>

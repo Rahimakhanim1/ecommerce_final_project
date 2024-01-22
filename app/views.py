@@ -47,15 +47,14 @@ def shop(request):
 def shopping_cart(request):
     items= ''
     if request.user.is_authenticated:
-            print('isleyirme')
+  
             customer = request.user
             order, created = Order.objects.get_or_create(customer=customer, complete=False)
             items = order.orderitem_set.all()
-            print(items)
     else:
-            print('islemirem')
             items = []
-    context= {'items': items}
+    order = Order.objects.all()
+    context= {'items': items,'order':order}
     return render(request, 'shopping-cart.html', context)
 
 def sign_in(request):
@@ -181,8 +180,6 @@ def updateItem(request):
         data = json.loads(request.body)
         productId = data['productId']
         action = data['action']
-        print('Action',action) 
-        print('Product',productId)
         customer = request.user
         product = Product.objects.get(id=productId)
         order, created = Order.objects.get_or_create(customer=customer,complete=False)
@@ -196,8 +193,49 @@ def updateItem(request):
         
         if orderItem.quantity <= 0:
             orderItem.delete()
-        return render(request,'shop.html',{'order':order,'orderItem':orderItem})
-    return render(request,'shop.html',{'order':order,'orderItem':orderItem})
+        return render(request,'shop.html',{'order':order,'orderItem':orderItem,'categories':categories,'brands':brands,'product':product})
+    order = Order.objects.all()
+    orderItem = OrderItem.objects.all()
+    categories = Categories.objects.all()
+    brands = Brands.objects.all()
+    product = Product.objects.all()
+
+    return render(request,'shop.html',{'order':order,'orderItem':orderItem,'categories':categories,'brands':brands,'product':product})
+
+def updateItemForShoppingCart(request):
+    data = ''
+    productId =''
+    action= ''
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        productId = data['productId']
+        action = data['action']
+        customer = request.user
+        product = Product.objects.get(id=productId)
+        order, created = Order.objects.get_or_create(customer=customer,complete=False)
+        orderItem, created = OrderItem.objects.get_or_create(order=order, product=product)
+
+        order = Order.objects.all()
+        orderItem = OrderItem.objects.all()
+        categories = Categories.objects.all()
+        brands = Brands.objects.all()
+        product = Product.objects.all()
+            
+        if action == 'add':
+            orderItem.quantity = (orderItem.quantity + 1)
+        elif action == 'remove':
+            orderItem.quantity = (orderItem.quantity - 1)
+        orderItem.save()
+        
+        if orderItem.quantity <= 0:
+            orderItem.delete()
+        return render(request,'shopping-cart.html',{'order':order,'orderItem':orderItem,'categories':categories,'brands':brands,'product':product})
+    order = Order.objects.all()
+    orderItem = OrderItem.objects.all()
+    categories = Categories.objects.all()
+    brands = Brands.objects.all()
+    product = Product.objects.all()
+    return render(request,'shopping-cart.html',{'order':order,'orderItem':orderItem,'categories':categories,'brands':brands,'product':product})
   
 def profile(request):
     pass

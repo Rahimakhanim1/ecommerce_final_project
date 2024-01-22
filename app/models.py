@@ -49,7 +49,7 @@ class Order(models.Model):
     def get_cart_total(self):
         orderitems = self.orderitem_set.all()
         total = sum([item.get_total for item in orderitems])
-        return total
+        return round(total,2)
     
     @property 
     def get_cart_items(self):
@@ -66,5 +66,5 @@ class OrderItem(models.Model):
     @property
     def get_total(self):
         total = self.product.product_price * self.quantity 
-        return total
+        return round(total,2)
 # Create your models here.
