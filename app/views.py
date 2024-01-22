@@ -176,6 +176,11 @@ def updateItem(request):
     data = ''
     productId =''
     action= ''
+    order = Order.objects.all()
+    orderItem = OrderItem.objects.all()
+    categories = Categories.objects.all()
+    brands = Brands.objects.all()
+    product = Product.objects.all()
     if request.method == 'POST':
         data = json.loads(request.body)
         productId = data['productId']
@@ -193,12 +198,10 @@ def updateItem(request):
         
         if orderItem.quantity <= 0:
             orderItem.delete()
+     
+
         return render(request,'shop.html',{'order':order,'orderItem':orderItem,'categories':categories,'brands':brands,'product':product})
-    order = Order.objects.all()
-    orderItem = OrderItem.objects.all()
-    categories = Categories.objects.all()
-    brands = Brands.objects.all()
-    product = Product.objects.all()
+
 
     return render(request,'shop.html',{'order':order,'orderItem':orderItem,'categories':categories,'brands':brands,'product':product})
 
@@ -229,14 +232,26 @@ def updateItemForShoppingCart(request):
         
         if orderItem.quantity <= 0:
             orderItem.delete()
-        return render(request,'shopping-cart.html',{'order':order,'orderItem':orderItem,'categories':categories,'brands':brands,'product':product})
+        return redirect('shopping-cart')
     order = Order.objects.all()
     orderItem = OrderItem.objects.all()
     categories = Categories.objects.all()
     brands = Brands.objects.all()
     product = Product.objects.all()
-    return render(request,'shopping-cart.html',{'order':order,'orderItem':orderItem,'categories':categories,'brands':brands,'product':product})
-  
+    return redirect('shopping-cart')
+
+def itemDelete(request):
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        productId = data['productId']
+        customer = request.user
+        # product = Product.objects.get(id=productId)
+        # order, created = Order.objects.get_or_create(customer=customer,complete=False)
+        orderItem, created = OrderItem.objects.get(order_id=productId)
+        orderItem.delete()
+        redirect('shopping-cart')
+        
+
 def profile(request):
     pass
 # def filterCat(request,id):

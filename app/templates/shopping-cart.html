@@ -62,9 +62,9 @@
 
 <body>
     <!-- Page Preloder -->
-    <div id="preloder">
+    <!-- <div id="preloder">
         <div class="loader"></div>
-    </div>
+    </div> -->
 
     <!-- Offcanvas Menu Begin -->
     <div class="offcanvas-menu-overlay"></div>
@@ -249,7 +249,7 @@
                                         </div>
                                     </td>
                                     <td class="cart__price">$ {{item.get_total}}</td>
-                                    <td class="cart__close"><a href="{% url 'update_item_shopping_cart' %}" class="update-cart" data-product='{{item.product.id}}' data-action="remove"><i class="fa fa-close"></i></a></td>
+                                    <td class="cart__close"><a href="{% url 'item-delete' %}" class="update-cart" data-product='{{item.product.id}}'><i class="fa fa-close"></i></a></td>
                                 </tr>
                                 {% endfor %}
                                 <!-- <tr>
