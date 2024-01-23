@@ -249,12 +249,11 @@
                                         </div>
                                     </td>
                                     <td class="cart__price">$ {{item.get_total}}</td>
-                                    <td class="cart__close"><a href="{% url 'item-delete' %}" class="update-cart" data-product='{{item.product.id}}'><i class="fa fa-close"></i></a></td>
+                                    <td class="cart__close"><a href="{% url 'item-delete' %}" class="update-cart" data-product='{{item.id}}' data-action="remove"><i class="fa fa-close"></i></a></td>
                                 </tr>
                                 {% endfor %}
                                 <!-- <tr>
-                                    <td class="product__cart__item">
-                                        <div class="product__cart__item__pic">
+                                    <td class="product__cart__item">                                         <div class="product__cart__item__pic">
                                             <img src="{% static 'img/shopping-cart/cart-2.jpg' %}" alt="">
                                         </div>
                                         <div class="product__cart__item__text">
@@ -391,7 +390,8 @@
                         <h6>NewLetter</h6>
                         <div class="footer__newslatter">
                             <p>Be the first to know about new arrivals, look books, sales & promos!</p>
-                            <form action="#">
+                            <form action="#" method="POST">
+                                {% csrf_token %}
                                 <input type="text" placeholder="Your email">
                                 <button type="submit"><span class="icon_mail_alt"></span></button>
                             </form>
@@ -428,7 +428,7 @@
         </div>
     </div>
     <!-- Search End -->
-
+    {% csrf_token %}
     <!-- Js Plugins -->
     <script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
     <script src="{% static 'js/bootstrap.min.js' %}"></script>
@@ -440,7 +440,7 @@
     <script src="{% static 'js/mixitup.min.js' %}"></script>
     <script src="{% static 'js/owl.carousel.min.js' %}"></script>
     <script src="{% static 'js/main.js' %}"></script>
-    <script src="{% static 'js/cart.js'%}"></script>
+    <script src="{% static 'js/shopping-cart.js'%}"></script>
     <script type="text/javascript">
         var user = '{{request.user}}';
   
@@ -461,8 +461,8 @@
     return cookieValue;
 }
     // const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
-const csrftoken = getCookie('csrftoken');
-//         console.log(csrftoken)
+    const csrftoken2 = getCookie('csrftoken');
+        console.log(csrftoken2)
 
 
     </script>
