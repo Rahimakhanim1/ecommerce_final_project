@@ -1,5 +1,4 @@
 var updateBtns = document.getElementsByClassName('update-cart')
-console.log('rahima')
 
 for(var i = 0; i < updateBtns.length; i++){
     updateBtns[i].addEventListener('click',function(){
@@ -14,10 +13,7 @@ for(var i = 0; i < updateBtns.length; i++){
 }
 
 function updateUserOrder(productId, action){
-    console.log('User is logged 36')
-
     var url = 'http://127.0.0.1:8003/item_delete/'
-
     fetch(url, {
         method: 'POST',
         headers: {

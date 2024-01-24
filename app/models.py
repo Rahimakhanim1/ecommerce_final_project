@@ -50,7 +50,9 @@ class Order(models.Model):
         orderitems = self.orderitem_set.all()
         total = sum([item.get_total for item in orderitems])
         return round(total,2)
-    
+    @property
+    def f(self):
+        return self.customer
     @property 
     def get_cart_items(self):
         orderitems = self.orderitem_set.all()

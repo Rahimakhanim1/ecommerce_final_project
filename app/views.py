@@ -178,11 +178,6 @@ def updateItem(request):
     data = ''
     productId =''
     action= ''
-    # order = Order.objects.all()
-    # orderItem = OrderItem.objects.all()
-    # categories = Categories.objects.all()
-    # brands = Brands.objects.all()
-    # product = Product.objects.all()
     if request.method == 'POST':
         data = json.loads(request.body)
         productId = data['productId']
@@ -239,9 +234,6 @@ def updateItemForShoppingCart(request):
     return redirect('shopping-cart')
 
 def itemDelete(request):
-    print('caliseyram')
-    
-   
     if request.method == 'POST':
         data = json.loads(request.body)
         productId = data['productId']
@@ -251,7 +243,6 @@ def itemDelete(request):
             product = Product.objects.get(id=productId)
             order= Order.objects.get(customer=customer)
             orderItem = OrderItem.objects.get(order=order,product=product)
-            print(orderItem)
             orderItem.delete()
     return redirect('shopping-cart')
     # return render(request, 'shopping-cart.html')
