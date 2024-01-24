@@ -9,29 +9,53 @@ from django.http import JsonResponse
 import json
 User = get_user_model()
 
-def index(request):  
-    return render(request,'index.html')
+def index(request): 
+    if request.user.is_authenticated: 
+            customer = request.user
+            order = Order.objects.get(customer=customer) 
+    return render(request,'index.html',{'order':order})
 
 def about(request):
-    return render(request,'about.html')
+    if request.user.is_authenticated: 
+            customer = request.user
+            order = Order.objects.get(customer=customer) 
+    return render(request,'about.html',{'order':order})
 
 def blog_details(request):
-    return render(request,'blog-details.html')
+    if request.user.is_authenticated: 
+            customer = request.user
+            order = Order.objects.get(customer=customer) 
+    return render(request,'blog-details.html',{'order':order})
 
 def blog(request):
-    return render(request,'blog.html')
+    if request.user.is_authenticated: 
+            customer = request.user
+            order = Order.objects.get(customer=customer) 
+    return render(request,'blog.html',{'order':order})
 
 def checkout(request):
-    return render(request,'checkout.html')
+    if request.user.is_authenticated: 
+            customer = request.user
+            order = Order.objects.get(customer=customer) 
+    return render(request,'checkout.html',{'order':order})
 
 def contact(request):
-    return render(request,'contact.html')
+    if request.user.is_authenticated: 
+            customer = request.user
+            order = Order.objects.get(customer=customer) 
+    return render(request,'contact.html',{'order':order})
 
 def main(request):
-    return render(request,'main.html')
+    if request.user.is_authenticated: 
+            customer = request.user
+            order = Order.objects.get(customer=customer) 
+    return render(request,'main.html',{'order':order})
 
 def shop_details(request):
-    return render(request,'shop-details.html')
+    if request.user.is_authenticated: 
+            customer = request.user
+            order = Order.objects.get(customer=customer) 
+    return render(request,'shop-details.html',{'order':order})
 
 def shop(request):
     categories = Categories.objects.all()

@@ -99,8 +99,8 @@
         <div class="offcanvas__nav__option">
             <a href="#" class="search-switch"><img src="{% static 'img/icon/search.png' %}" alt=""></a>
             <a href="#"><img src="{% static 'img/icon/heart.png' %}" alt=""></a>
-            <a href="#"><img src="{% static 'img/icon/cart.png' %}" alt=""> <span>0</span></a>
-            <div class="price">$0.00</div>
+            <a href="#"><img src="{% static 'img/icon/cart.png' %}" alt=""> <span>{{order.get_cart_items}}</span></a>
+            <div class="price">${{order.get_cart_total}}</div>
         </div>
         <div id="mobile-menu-wrap"></div>
         <div class="offcanvas__text">
@@ -182,8 +182,8 @@
                     <div class="header__nav__option">
                         <a href="#" class="search-switch"><img src="{% static 'img/icon/search.png' %}" alt=""></a>
                         <a href="#"><img src="{% static 'img/icon/heart.png' %}" alt=""></a>
-                        <a href="#"><img src="{% static 'img/icon/cart.png' %}" alt=""> <span>0</span></a>
-                        <div class="price">$0.00</div>
+                        <a href="#"><img src="{% static 'img/icon/cart.png' %}" alt=""> <span>{{order.get_cart_items}}</span></a>
+                        <div class="price">${{order.get_cart_total}}</div>
                     </div>
                 </div>
             </div>
