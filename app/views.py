@@ -37,25 +37,27 @@ def shop(request):
     categories = Categories.objects.all()
     brands = Brands.objects.all()
     product = Product.objects.all()
-    order = Order.objects.all()
-    # OrderItem = OrderItem.objects.all()
+    orderItem = OrderItem.objects.all()
+    if request.user.is_authenticated: 
+            customer = request.user
+            order = Order.objects.get(customer=customer)
     # categoriesCount = []
     # for c_item in categories:
     #     count = Product.objects.filter(category_id = c_item).count()
        
     #     categoriesCount.append(count)     
-    return render(request,'shop.html',{'product':product,'categories':categories,'brands':brands,'order':order})
+    return render(request,'shop.html',{'product':product,'categories':categories,'brands':brands,'order':order,'OrderItem':orderItem})
 
 def shopping_cart(request):
     items= ''
-    if request.user.is_authenticated:
-  
+    if request.user.is_authenticated: 
             customer = request.user
             order, created = Order.objects.get_or_create(customer=customer, complete=False)
             items = order.orderitem_set.all()
     else:
             items = []
-    order = Order.objects.all()
+   
+    orderItem = OrderItem.objects.all()
     context= {'items': items,'order':order}
     return render(request, 'shopping-cart.html', context)
 
