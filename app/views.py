@@ -37,7 +37,8 @@ def checkout(request):
     if request.user.is_authenticated: 
             customer = request.user
             order = Order.objects.get(customer=customer) 
-    return render(request,'checkout.html',{'order':order})
+            items = order.orderitem_set.all()
+    return render(request,'checkout.html',{'order':order,'items':items})
 
 def contact(request):
     if request.user.is_authenticated: 
