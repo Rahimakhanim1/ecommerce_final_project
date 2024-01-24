@@ -186,7 +186,7 @@ def updateItem(request):
     if request.method == 'POST':
         data = json.loads(request.body)
         productId = data['productId']
-        # action = data['action']
+        action = data['action']
         customer = request.user
         product = Product.objects.get(id=productId)
         order, created = Order.objects.get_or_create(customer=customer,complete=False)
@@ -242,17 +242,17 @@ def itemDelete(request):
     print('caliseyram')
     
    
-    if request.method == 'GET':
-        print(request)
+    if request.method == 'POST':
         data = json.loads(request.body)
-        print(data)
         productId = data['productId']
-        customer = request.user
-        product = Product.objects.get(id=productId)
-        order= Order.objects.get(customer=customer)
-        orderItem = OrderItem.objects.get(order=order,product=product)
-        print(orderItem)
-        orderItem.delete()
+        action = data['action']
+        if action=='remove':
+            customer = request.user
+            product = Product.objects.get(id=productId)
+            order= Order.objects.get(customer=customer)
+            orderItem = OrderItem.objects.get(order=order,product=product)
+            print(orderItem)
+            orderItem.delete()
     return redirect('shopping-cart')
     # return render(request, 'shopping-cart.html')
 

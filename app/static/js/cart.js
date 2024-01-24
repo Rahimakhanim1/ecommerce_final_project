@@ -15,7 +15,7 @@ for(var i = 0; i < updateBtns.length; i++){
 function updateUserOrder(productId, action){
     console.log('User is logged 16')
 
-    var url = 'http://127.0.0.1:8000/update_item/'
+    var url = 'http://127.0.0.1:8003/update_item/'
 
     fetch(url, {
         method: 'POST',
