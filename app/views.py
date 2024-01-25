@@ -7,8 +7,14 @@ from django.contrib.auth import authenticate,get_user_model,logout
 from .models import CustomUser
 from django.http import JsonResponse
 import json
+from django.core.paginator import Paginator
 User = get_user_model()
+# def list_venues(request):
+#      venue_list = Venue.objects.all()
 
+     
+
+    
 def index(request): 
     if request.user.is_authenticated: 
             customer = request.user
@@ -59,6 +65,12 @@ def shop_details(request):
     return render(request,'shop-details.html',{'order':order})
 
 def shop(request):
+    contact_list = Product.objects.all()
+    paginator = Paginator(contact_list, 2)  # Show 25 contacts per page.
+
+    page_number = request.GET.get("page")
+    page_obj = paginator.get_page(page_number)
+    
     categories = Categories.objects.all()
     brands = Brands.objects.all()
     product = Product.objects.all()
@@ -71,7 +83,7 @@ def shop(request):
     #     count = Product.objects.filter(category_id = c_item).count()
        
     #     categoriesCount.append(count)     
-    return render(request,'shop.html',{'product':product,'categories':categories,'brands':brands,'order':order,'OrderItem':orderItem})
+    return render(request,'shop.html',{"page_obj": page_obj,'product':product,'categories':categories,'brands':brands,'order':order,'OrderItem':orderItem})
 
 def shopping_cart(request):
     items= ''

@@ -5,6 +5,8 @@ class Categories(models.Model):
 
     def __str__(self):
         return self.category
+  
+
     
 class Brands(models.Model):
     brand = models.CharField(max_length = 50, null = True)
@@ -50,9 +52,7 @@ class Order(models.Model):
         orderitems = self.orderitem_set.all()
         total = sum([item.get_total for item in orderitems])
         return round(total,2)
-    @property
-    def f(self):
-        return self.customer
+   
     @property 
     def get_cart_items(self):
         orderitems = self.orderitem_set.all()
