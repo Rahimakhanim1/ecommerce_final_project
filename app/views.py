@@ -66,11 +66,13 @@ def shop_details(request):
 
 def shop(request):
     contact_list = Product.objects.all()
-    paginator = Paginator(contact_list, 2)  # Show 25 contacts per page.
+    paginator = Paginator(contact_list, 3)  # Show 25 contacts per page.
 
     page_number = request.GET.get("page")
     page_obj = paginator.get_page(page_number)
-    
+    nums = []
+    for i in range(1,page_obj.paginator.num_pages+1):
+         nums.append(i)
     categories = Categories.objects.all()
     brands = Brands.objects.all()
     product = Product.objects.all()
@@ -83,7 +85,7 @@ def shop(request):
     #     count = Product.objects.filter(category_id = c_item).count()
        
     #     categoriesCount.append(count)     
-    return render(request,'shop.html',{"page_obj": page_obj,'product':product,'categories':categories,'brands':brands,'order':order,'OrderItem':orderItem})
+    return render(request,'shop.html',{'nums':nums,'page_obj': page_obj,'product':product,'categories':categories,'brands':brands,'order':order,'OrderItem':orderItem})
 
 def shopping_cart(request):
     items= ''
