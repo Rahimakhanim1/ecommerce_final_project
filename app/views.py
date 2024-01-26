@@ -19,50 +19,59 @@ def index(request):
     if request.user.is_authenticated: 
             customer = request.user
             order = Order.objects.get(customer=customer) 
-    return render(request,'index.html',{'order':order})
+            return render(request,'index.html',{'order':order})
+    
+    return render(request,'index.html')
 
 def about(request):
     if request.user.is_authenticated: 
             customer = request.user
             order = Order.objects.get(customer=customer) 
-    return render(request,'about.html',{'order':order})
+            return render(request,'about.html',{'order':order})
+    return render(request,'about.html')
 
 def blog_details(request):
     if request.user.is_authenticated: 
             customer = request.user
             order = Order.objects.get(customer=customer) 
-    return render(request,'blog-details.html',{'order':order})
+            return render(request,'blog-details.html',{'order':order})
+    return render(request,'blog-details.html')
 
 def blog(request):
     if request.user.is_authenticated: 
             customer = request.user
             order = Order.objects.get(customer=customer) 
-    return render(request,'blog.html',{'order':order})
+            return render(request,'blog.html',{'order':order})
+    return render(request,'blog.html')
 
 def checkout(request):
     if request.user.is_authenticated: 
             customer = request.user
             order = Order.objects.get(customer=customer) 
             items = order.orderitem_set.all()
-    return render(request,'checkout.html',{'order':order,'items':items})
+            return render(request,'checkout.html',{'order':order,'items':items})
+    return render(request,'chekout.html')
 
 def contact(request):
     if request.user.is_authenticated: 
             customer = request.user
             order = Order.objects.get(customer=customer) 
-    return render(request,'contact.html',{'order':order})
+            return render(request,'contact.html',{'order':order})
+    return render(request,'contact.html')
 
 def main(request):
     if request.user.is_authenticated: 
             customer = request.user
             order = Order.objects.get(customer=customer) 
-    return render(request,'main.html',{'order':order})
+            return render(request,'main.html',{'order':order})
+    return render(request,'main.html')
 
 def shop_details(request):
     if request.user.is_authenticated: 
             customer = request.user
             order = Order.objects.get(customer=customer) 
-    return render(request,'shop-details.html',{'order':order})
+            return render(request,'shop-details.html',{'order':order})
+    return render(request,'shop-details.html')
 
 def shop(request):
     contact_list = Product.objects.all()
@@ -80,12 +89,13 @@ def shop(request):
     if request.user.is_authenticated: 
             customer = request.user
             order = Order.objects.get(customer=customer)
+            return render(request,'shop.html',{'nums':nums,'page_obj': page_obj,'product':product,'categories':categories,'brands':brands,'order':order,'OrderItem':orderItem})
     # categoriesCount = []
     # for c_item in categories:
     #     count = Product.objects.filter(category_id = c_item).count()
        
     #     categoriesCount.append(count)     
-    return render(request,'shop.html',{'nums':nums,'page_obj': page_obj,'product':product,'categories':categories,'brands':brands,'order':order,'OrderItem':orderItem})
+    return render(request,'shop.html',{'nums':nums,'page_obj': page_obj,'product':product,'categories':categories,'brands':brands})
 
 def shopping_cart(request):
     items= ''

@@ -16,7 +16,7 @@ class Brands(models.Model):
     
 class Product(models.Model):
     product_name = models.CharField(max_length = 100)
-    product_price = models.IntegerField(blank = True)
+    product_price = models.FloatField(blank = True)
     product_image = models.FileField(upload_to = 'images/')
     category = models.ForeignKey(Categories,null = True,on_delete = models.DO_NOTHING)
     brand = models.ForeignKey(Brands,null = True,on_delete = models.DO_NOTHING)
