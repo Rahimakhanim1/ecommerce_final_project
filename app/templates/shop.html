@@ -251,23 +251,15 @@
                                                 <ul class="nice-scroll">
 
                                                
-                                                    
-                                                        {% for c in categories %}
+                                                
+                                                        {% for category in categories %}
                 
-                                                            <li><a href="">{{c}}</a></li>
+                                                            <li><a href="{% url 'filter-category' category.id%}">{{category}}</a></li>
                                                             
                                                     
                                                         
                                                         {% endfor %}
                                               
-                                                    <!-- <li><a href="#">Women (20)</a></li>
-                                                    <li><a href="#">Bags (20)</a></li>
-                                                    <li><a href="#">Clothing (20)</a></li>
-                                                    <li><a href="#">Shoes (20)</a></li>
-                                                    <li><a href="#">Accessories (20)</a></li>
-                                                    <li><a href="#">Kids (20)</a></li>
-                                                    <li><a href="#">Kids (20)</a></li>
-                                                    <li><a href="#">Kids (20)</a></li> -->
                                                 </ul>
                                             </div>
                                         </div>
@@ -282,7 +274,7 @@
                                             <div class="shop__sidebar__brand">
                                                 <ul>
                                                     {% for brand in brands %}
-                                                    <li><a href="">{{brand}}</a></li>
+                                                    <li><a href="{% url 'filter-brand' brand.id %}">{{brand}}</a></li>
                                                     {% endfor %}
                                                     
                                                 </ul>

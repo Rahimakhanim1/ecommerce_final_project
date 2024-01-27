@@ -19,7 +19,9 @@ urlpatterns = [
     path('profile/',views.profile,name='profile'),
     path('update_item/',views.updateItem,name="update_item"),
     path('update_item_shopping_cart/',views.updateItemForShoppingCart,name="update_item_shopping_cart"),
-    path('item_delete/',views.itemDelete,name='item-delete')
+    path('item_delete/',views.itemDelete,name='item-delete'),
+    path('filterCategory<int:id>',views.filterCategory,name='filter-category'),
+    path('filterBrand<int:id>',views.filterBrand,name='filter-brand')
 
 
     # path('shop/<int:id>', views.filterCat, name='filterCat'),

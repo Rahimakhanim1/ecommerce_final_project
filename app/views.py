@@ -75,8 +75,7 @@ def shop_details(request):
 
 def shop(request):
     contact_list = Product.objects.all()
-    paginator = Paginator(contact_list, 3)  # Show 25 contacts per page.
-
+    paginator = Paginator(contact_list, 2) 
     page_number = request.GET.get("page")
     page_obj = paginator.get_page(page_number)
     nums = []
@@ -86,16 +85,79 @@ def shop(request):
     brands = Brands.objects.all()
     product = Product.objects.all()
     orderItem = OrderItem.objects.all()
+    # categoriesCount = {}
+   
+    # for i in categories:
+
+    #     k=0
+    #     for j in product:
+    #          if i.id==j.category_id:
+    #               k+=1
+    #     print(i)
+    #     categoriesCount.update([(i.category,k)])
+    # print(categoriesCount)
+    # categoriesCount = {}
+    # for i in range(len())
     if request.user.is_authenticated: 
             customer = request.user
             order = Order.objects.get(customer=customer)
-            return render(request,'shop.html',{'nums':nums,'page_obj': page_obj,'product':product,'categories':categories,'brands':brands,'order':order,'OrderItem':orderItem})
+            return render(request,'shop.html',{'nums':nums,
+                                               'page_obj': page_obj,
+                                               'product':product,
+                                               'categories':categories,
+                                               'brands':brands,
+                                               'order':order,
+                                               'OrderItem':orderItem})
     # categoriesCount = []
     # for c_item in categories:
     #     count = Product.objects.filter(category_id = c_item).count()
        
     #     categoriesCount.append(count)     
-    return render(request,'shop.html',{'nums':nums,'page_obj': page_obj,'product':product,'categories':categories,'brands':brands})
+    return render(request,'shop.html',{'nums':nums,
+                                       'page_obj': page_obj,
+                                       'product':product,
+                                       'categories':categories,
+                                       'brands':brands,
+                                       'order':order,
+                                       'OrderItem':orderItem})
+
+def filterCategory(request,id):
+    contact_list = Product.objects.all()
+    paginator = Paginator(contact_list, 3) 
+    page_number = request.GET.get("page")
+    page_obj = paginator.get_page(page_number)
+    nums = []
+    for i in range(1,page_obj.paginator.num_pages+1):
+         nums.append(i)
+    categories = Categories.objects.all()
+    brands = Brands.objects.all()
+    product = Product.objects.all()
+    orderItem = OrderItem.objects.all()
+    page_obj = Product.objects.filter(category_id=id)
+    return render(request,'shop.html',{'page_obj':page_obj,
+                                       'categories':categories,
+                                       'brands':brands,
+                                       'orderItem':orderItem,
+                                       'product':product})
+     
+def filterBrand(request,id):
+    contact_list = Product.objects.all()
+    paginator = Paginator(contact_list, 3) 
+    page_number = request.GET.get("page")
+    page_obj = paginator.get_page(page_number)
+    nums = []
+    for i in range(1,page_obj.paginator.num_pages+1):
+         nums.append(i)
+    categories = Categories.objects.all()
+    brands = Brands.objects.all()
+    product = Product.objects.all()
+    orderItem = OrderItem.objects.all()
+    page_obj = Product.objects.filter(brand_id=id)
+    return render(request,'shop.html',{'page_obj':page_obj,
+                                       'categories':categories,
+                                       'brands':brands,
+                                       'orderItem':orderItem,
+                                       'product':product})
 
 def shopping_cart(request):
     items= ''
@@ -292,7 +354,7 @@ def itemDelete(request):
         if action=='remove':
             customer = request.user
             product = Product.objects.get(id=productId)
-            order= Order.objects.get(customer=customer)
+            order = Order.objects.get(customer=customer)
             orderItem = OrderItem.objects.get(order=order,product=product)
             orderItem.delete()
     return redirect('shopping-cart')
@@ -300,6 +362,9 @@ def itemDelete(request):
 
 def profile(request):
     pass
+
+def searchCategory(request):
+     pass
 # def filterCat(request,id):
 #     filterData = Product.objects.filter(category_id = id)
 #     categories = Categories.objects.all()
