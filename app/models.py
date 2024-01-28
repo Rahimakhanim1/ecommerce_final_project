@@ -29,7 +29,7 @@ class Tags(models.Model):
         return self.tags
 class Product(models.Model):
     product_name = models.CharField(max_length = 100)
-    product_price = models.IntegerField()
+    product_price = models.FloatField()
     product_image = models.FileField(upload_to = 'images/')
     category = models.ForeignKey(Categories,null = True,on_delete = models.DO_NOTHING)
     brand = models.ForeignKey(Brands,null = True,on_delete = models.DO_NOTHING)
@@ -83,5 +83,8 @@ class OrderItem(models.Model):
     @property
     def get_total(self):
         total = self.product.product_price * self.quantity 
+    
         return round(total,2)
+    
+
 # Create your models here.

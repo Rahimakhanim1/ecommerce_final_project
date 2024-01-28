@@ -57,6 +57,9 @@
         .size-link:hover{
             color:inherit !important;
         }
+        .filter-price:hover{
+            color:black !important;
+        }
        @media (max-width:720px) {
         .profile-section{
             color:black;
@@ -238,7 +241,7 @@
                                             <div class="shop__sidebar__categories">
                                                 <ul class="nice-scroll">
 
-                                               
+                                                   
                                                 
                                                         {% for category in categories %}
                 
@@ -396,11 +399,14 @@
                             <div class="col-lg-6 col-md-6 col-sm-6">
                                 <div class="shop__product__option__right">
                                     <p>Sort by Price:</p>
+                                    <a href="{% url 'filter-price' %}" style="color:black" class="filter-price"> Low To High</a>
+                                 
                                     <select>
-                                        <option value="">Low To High</option>
+                                        
                                         <option value="">$0 - $55</option>
                                         <option value="">$55 - $100</option>
                                     </select>
+                          
                                 </div>
                             </div>
                         </div>

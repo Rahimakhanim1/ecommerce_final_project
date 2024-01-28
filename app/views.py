@@ -223,8 +223,6 @@ def filterColor(request):
 
 
 def filterTag(request,id):
-
-    print('isledim','2')
     contact_list = Product.objects.filter(tags_id=id)
     paginator = Paginator(contact_list, 3) 
     page_number = request.GET.get("page")
@@ -249,6 +247,32 @@ def filterTag(request,id):
                                     'tags':tags,
                                     'nums':nums}) 
 
+
+def filterPrice(request):
+    print('isledim')
+    contact_list = Product.objects.order_by('product_price')
+    paginator = Paginator(contact_list, 2) 
+    page_number = request.GET.get("page")
+    page_obj = paginator.get_page(page_number)
+    nums = []
+    for i in range(1,page_obj.paginator.num_pages+1):
+         nums.append(i)
+    categories = Categories.objects.all()
+    brands = Brands.objects.all()
+    product = Product.objects.all()
+    size = Size.objects.all()
+    tags = Tags.objects.all()
+    color = Color.objects.all()
+    orderItem = OrderItem.objects.all()
+    return render(request,'shop.html',{'page_obj':page_obj,
+                                       'categories':categories,
+                                       'brands':brands,
+                                       'orderItem':orderItem,
+                                       'product':product,
+                                       'size':size,
+                                       'color':color,
+                                       'nums':nums,
+                                       'tags':tags})
 def shopping_cart(request):
     items= ''
     if request.user.is_authenticated: 
@@ -455,19 +479,5 @@ def profile(request):
 
 def searchCategory(request):
      pass
-# def filterCat(request,id):
-#     filterData = Product.objects.filter(category_id = id)
-#     categories = Categories.objects.all()
-#     brands = Brands.objects.all()
-#     return render(request,'shop.html',{'filterData':filterData,'categories':categories,'brands':brands})
-
-# def filterBrand(request,id):
-#     filterBata = Product.objects.filter(brand_id = id)
-#     categories = Categories.objects.all()
-#     brands = Brands.objects.all()
-#     return render(request,'shop.html',{'filterData':filterBata,'categories':categories,'brands':brands})
-
-
-
 
 # Create your views here.
