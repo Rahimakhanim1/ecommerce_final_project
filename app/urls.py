@@ -21,7 +21,10 @@ urlpatterns = [
     path('update_item_shopping_cart/',views.updateItemForShoppingCart,name="update_item_shopping_cart"),
     path('item_delete/',views.itemDelete,name='item-delete'),
     path('filterCategory<int:id>',views.filterCategory,name='filter-category'),
-    path('filterBrand<int:id>',views.filterBrand,name='filter-brand')
+    path('filterBrand<int:id>',views.filterBrand,name='filter-brand'),
+    path('filterSize<int:id>',views.filterSize,name='filter-size'),
+    path('filterColor/',views.filterColor,name='filter-color'),
+    path('filterTag<int:id>/',views.filterTag,name='filter-tag')
 
 
     # path('shop/<int:id>', views.filterCat, name='filterCat'),

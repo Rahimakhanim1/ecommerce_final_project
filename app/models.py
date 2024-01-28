@@ -21,12 +21,15 @@ class Brands(models.Model):
 
     def __str__(self):
         return self.brand
+    
 class Tags(models.Model):
     tags = models.CharField(max_length = 100) 
 
+    def __str__(self):
+        return self.tags
 class Product(models.Model):
     product_name = models.CharField(max_length = 100)
-    product_price = models.FloatField(blank = True)
+    product_price = models.IntegerField()
     product_image = models.FileField(upload_to = 'images/')
     category = models.ForeignKey(Categories,null = True,on_delete = models.DO_NOTHING)
     brand = models.ForeignKey(Brands,null = True,on_delete = models.DO_NOTHING)

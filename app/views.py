@@ -17,6 +17,7 @@ User = get_user_model()
     
 def index(request): 
     if request.user.is_authenticated: 
+           
             customer = request.user
             order = Order.objects.get(customer=customer) 
             return render(request,'index.html',{'order':order})
@@ -75,6 +76,47 @@ def shop_details(request):
 
 def shop(request):
     contact_list = Product.objects.all()
+    paginator = Paginator(contact_list, 3) 
+    page_number = request.GET.get("page")
+    page_obj = paginator.get_page(page_number)
+    nums = []
+    for i in range(1,page_obj.paginator.num_pages+1):
+         nums.append(i)
+    categories = Categories.objects.all()
+    brands = Brands.objects.all()
+    product = Product.objects.all()
+    orderItem = OrderItem.objects.all()
+    size = Size.objects.all()
+    color = Color.objects.all()
+    tags = Tags.objects.all()
+    if request.user.is_authenticated: 
+
+            customer = request.user
+            order = Order.objects.get(customer=customer)
+          
+            return render(request,'shop.html',{'nums':nums,
+                                                'page_obj': page_obj,
+                                                'product':product,
+                                                'categories':categories,
+                                                'brands':brands,
+                                                'order':order,
+                                                'OrderItem':orderItem,
+                                                'size':size,
+                                                'color':color,
+                                                'tags':tags})    
+    return render(request,'shop.html',{'nums':nums,
+                                       'page_obj': page_obj,
+                                       'product':product,
+                                       'categories':categories,
+                                       'brands':brands,
+                                       'order':order,
+                                       'OrderItem':orderItem,
+                                       'size':size,
+                                        'color':color,
+                                        'tags':tags})
+
+def filterCategory(request,id):
+    contact_list = Product.objects.filter(category_id=id)
     paginator = Paginator(contact_list, 2) 
     page_number = request.GET.get("page")
     page_obj = paginator.get_page(page_number)
@@ -84,64 +126,47 @@ def shop(request):
     categories = Categories.objects.all()
     brands = Brands.objects.all()
     product = Product.objects.all()
+    size = Size.objects.all()
+    tags = Tags.objects.all()
+    color = Color.objects.all()
     orderItem = OrderItem.objects.all()
-    # categoriesCount = {}
-   
-    # for i in categories:
-
-    #     k=0
-    #     for j in product:
-    #          if i.id==j.category_id:
-    #               k+=1
-    #     print(i)
-    #     categoriesCount.update([(i.category,k)])
-    # print(categoriesCount)
-    # categoriesCount = {}
-    # for i in range(len())
-    if request.user.is_authenticated: 
-            customer = request.user
-            order = Order.objects.get(customer=customer)
-            return render(request,'shop.html',{'nums':nums,
-                                               'page_obj': page_obj,
-                                               'product':product,
-                                               'categories':categories,
-                                               'brands':brands,
-                                               'order':order,
-                                               'OrderItem':orderItem})
-    # categoriesCount = []
-    # for c_item in categories:
-    #     count = Product.objects.filter(category_id = c_item).count()
-       
-    #     categoriesCount.append(count)     
-    return render(request,'shop.html',{'nums':nums,
-                                       'page_obj': page_obj,
-                                       'product':product,
-                                       'categories':categories,
-                                       'brands':brands,
-                                       'order':order,
-                                       'OrderItem':orderItem})
-
-def filterCategory(request,id):
-    contact_list = Product.objects.all()
-    paginator = Paginator(contact_list, 3) 
-    page_number = request.GET.get("page")
-    page_obj = paginator.get_page(page_number)
-    nums = []
-    for i in range(1,page_obj.paginator.num_pages+1):
-         nums.append(i)
-    categories = Categories.objects.all()
-    brands = Brands.objects.all()
-    product = Product.objects.all()
-    orderItem = OrderItem.objects.all()
-    page_obj = Product.objects.filter(category_id=id)
     return render(request,'shop.html',{'page_obj':page_obj,
                                        'categories':categories,
                                        'brands':brands,
                                        'orderItem':orderItem,
-                                       'product':product})
+                                       'product':product,
+                                       'size':size,
+                                       'color':color,
+                                       'nums':nums,
+                                       'tags':tags})
      
 def filterBrand(request,id):
-    contact_list = Product.objects.all()
+    contact_list = Product.objects.filter(brand_id=id)
+    paginator = Paginator(contact_list, 2) 
+    page_number = request.GET.get("page")
+    page_obj = paginator.get_page(page_number)
+    nums = []
+    for i in range(1,page_obj.paginator.num_pages+1):
+         nums.append(i)
+    categories = Categories.objects.all()
+    brands = Brands.objects.all()
+    size = Size.objects.all()
+    color = Color.objects.all()
+    product = Product.objects.all()
+    tags = Tags.objects.all()
+    orderItem = OrderItem.objects.all()
+    return render(request,'shop.html',{'page_obj':page_obj,
+                                       'categories':categories,
+                                       'brands':brands,
+                                       'orderItem':orderItem,
+                                       'product':product,
+                                       'size':size,
+                                       'color':color,
+                                       'nums':nums,
+                                       'tags':tags})
+
+def filterSize(request,id):
+    contact_list = Product.objects.filter(size_id=id)
     paginator = Paginator(contact_list, 3) 
     page_number = request.GET.get("page")
     page_obj = paginator.get_page(page_number)
@@ -151,13 +176,78 @@ def filterBrand(request,id):
     categories = Categories.objects.all()
     brands = Brands.objects.all()
     product = Product.objects.all()
+    size = Size.objects.all()
+    color = Color.objects.all()
+    tags = Tags.objects.all()
     orderItem = OrderItem.objects.all()
-    page_obj = Product.objects.filter(brand_id=id)
     return render(request,'shop.html',{'page_obj':page_obj,
                                        'categories':categories,
                                        'brands':brands,
                                        'orderItem':orderItem,
-                                       'product':product})
+                                       'product':product,
+                                       'size':size,
+                                       'color':color,
+                                       'nums':nums,
+                                       'tags':tags})
+
+
+def filterColor(request):
+    print('isledim')
+    if request.method == 'POST':
+        print('isledim','2')
+        name = request.POST["name"]
+        name = int(name)
+        print(name)
+        contact_list = Product.objects.all()
+        paginator = Paginator(contact_list, 3) 
+        page_number = request.GET.get("page")
+        page_obj = paginator.get_page(page_number)
+        nums = []
+        for i in range(1,page_obj.paginator.num_pages+1):
+            nums.append(i)
+        categories = Categories.objects.all()
+        brands = Brands.objects.all()
+        product = Product.objects.all()
+        size = Size.objects.all()
+        color = Color.objects.all()
+        orderItem = OrderItem.objects.all()
+        page_obj = Product.objects.filter(color_id=name)
+        return render(request,'shop.html',{'page_obj':page_obj,
+                                        'categories':categories,
+                                        'brands':brands,
+                                        'orderItem':orderItem,
+                                        'product':product,
+                                        'size':size,
+                                        'color':color}) 
+
+
+
+def filterTag(request,id):
+
+    print('isledim','2')
+    contact_list = Product.objects.filter(tags_id=id)
+    paginator = Paginator(contact_list, 3) 
+    page_number = request.GET.get("page")
+    page_obj = paginator.get_page(page_number)
+    nums = []
+    for i in range(1,page_obj.paginator.num_pages+1):
+        nums.append(i)
+    categories = Categories.objects.all()
+    brands = Brands.objects.all()
+    product = Product.objects.all()
+    size = Size.objects.all()
+    color = Color.objects.all()
+    tags = Tags.objects.all()
+    orderItem = OrderItem.objects.all()
+    return render(request,'shop.html',{'page_obj':page_obj,
+                                    'categories':categories,
+                                    'brands':brands,
+                                    'orderItem':orderItem,
+                                    'product':product,
+                                    'size':size,
+                                    'color':color,
+                                    'tags':tags,
+                                    'nums':nums}) 
 
 def shopping_cart(request):
     items= ''

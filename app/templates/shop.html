@@ -51,6 +51,12 @@
         .profile-section:hover .profile-section-li{
             display: block;
         }
+        .size-link{
+            color:grey !important;
+        }
+        .size-link:hover{
+            color:inherit !important;
+        }
        @media (max-width:720px) {
         .profile-section{
             color:black;
@@ -99,16 +105,7 @@
         <div class="offcanvas__nav__option">
             <a href="#" class="search-switch"><img src="{% static 'img/icon/search.png' %}" alt=""></a>
             <a href="#"><img src="{% static 'img/icon/heart.png' %}" alt=""></a>
-            {% if user.is_authenticated %}
-                <a href="#"><img src="{% static 'img/icon/cart.png' %}" alt=""> <span>{{order.get_cart_items}}</span></a>
-            
-                <div class="price">${{order.get_cart_total}}</div><br>
-            {% else %}
-                <a href="#"><img src="{% static 'img/icon/cart.png' %}" alt=""> <span>0</span></a>
-                
-                <div class="price">$0</div><br>
-
-            {% endif %}
+       
         </div>
         <div id="mobile-menu-wrap"></div>
         <div class="offcanvas__text">
@@ -189,16 +186,7 @@
                     <div class="header__nav__option">
                         <a href="#" class="search-switch"><img src="{% static 'img/icon/search.png' %}" alt=""></a>
                         <a href="#"><img src="{% static 'img/icon/heart.png' %}" alt=""></a>
-                        {% if user.is_authenticated %}
-                            <a href="#"><img src="{% static 'img/icon/cart.png' %}" alt=""> <span>{{order.get_cart_items}}</span></a>
-                        
-                            <div class="price">${{order.get_cart_total}}</div><br>
-                        {% else %}
-                            <a href="#"><img src="{% static 'img/icon/cart.png' %}" alt=""> <span>0</span></a>
-                            
-                            <div class="price">$0</div><br>
-
-                        {% endif %}
+                   
                       
                        
                     </div>
@@ -308,10 +296,12 @@
                                     <div id="collapseFour" class="collapse show" data-parent="#accordionExample">
                                         <div class="card-body">
                                             <div class="shop__sidebar__size">
-                                                <label for="xs">xs
-                                                    <input type="radio" id="xs">
+                                                {% for item in size %}
+                                                <label for="{{item}}"><a href="{% url 'filter-size' item.id %}" class="link-offset-2 size-link">{{item}}</a>
+                                                    <input type="radio" id="{{item}}">
                                                 </label>
-                                                <label for="sm">s
+                                                {% endfor %}
+                                                <!-- <label for="sm">s
                                                     <input type="radio" id="sm">
                                                 </label>
                                                 <label for="md">m
@@ -331,21 +321,23 @@
                                                 </label>
                                                 <label for="4xl">4xl
                                                     <input type="radio" id="4xl">
-                                                </label>
+                                                </label> -->
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="card">
+                                <!-- <div class="card">
                                     <div class="card-heading">
                                         <a data-toggle="collapse" data-target="#collapseFive">Colors</a>
                                     </div>
                                     <div id="collapseFive" class="collapse show" data-parent="#accordionExample">
                                         <div class="card-body">
                                             <div class="shop__sidebar__color">
+                                             
                                                 <label class="c-1" for="sp-1">
                                                     <input type="radio" id="sp-1">
                                                 </label>
+                                              
                                                 <label class="c-2" for="sp-2">
                                                     <input type="radio" id="sp-2">
                                                 </label>
@@ -373,7 +365,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                </div> -->
                                 <div class="card">
                                     <div class="card-heading">
                                         <a data-toggle="collapse" data-target="#collapseSix">Tags</a>
@@ -381,13 +373,10 @@
                                     <div id="collapseSix" class="collapse show" data-parent="#accordionExample">
                                         <div class="card-body">
                                             <div class="shop__sidebar__tags">
-                                                <a href="#">Product</a>
-                                                <a href="#">Bags</a>
-                                                <a href="#">Shoes</a>
-                                                <a href="#">Fashio</a>
-                                                <a href="#">Clothing</a>
-                                                <a href="#">Hats</a>
-                                                <a href="#">Accessories</a>
+                                                {% for item in tags %}
+                                                <a href="{%url 'filter-tag' item.id%}">{{item}}</a>
+                                                {%endfor%}
+                                              
                                             </div>
                                         </div>
                                     </div>
@@ -417,7 +406,7 @@
                         </div>
                     </div>
                     <div class="row">
-             
+                    {% if page_obj%}
                      
                         {% for item in page_obj %}
                         <div class="col-lg-4 col-md-6 col-sm-6">
@@ -461,6 +450,10 @@
                         </div>
 
                         {% endfor %}
+                    {% else %}
+                    <div class="col-lg-4 col-md-6 col-sm-6">
+                        <h3>Product not found</h3></div>
+                    {% endif %}
 
                    
                        
