@@ -76,7 +76,7 @@ def shop_details(request):
 
 def shop(request):
     contact_list = Product.objects.all()
-    paginator = Paginator(contact_list, 3) 
+    paginator = Paginator(contact_list, 5) 
     page_number = request.GET.get("page")
     page_obj = paginator.get_page(page_number)
     nums = []
@@ -89,6 +89,7 @@ def shop(request):
     size = Size.objects.all()
     color = Color.objects.all()
     tags = Tags.objects.all()
+    order = Order.objects.all()
     if request.user.is_authenticated: 
 
             customer = request.user
@@ -130,6 +131,7 @@ def filterCategory(request,id):
     tags = Tags.objects.all()
     color = Color.objects.all()
     orderItem = OrderItem.objects.all()
+    order = Order.objects.all()
     return render(request,'shop.html',{'page_obj':page_obj,
                                        'categories':categories,
                                        'brands':brands,
@@ -138,7 +140,8 @@ def filterCategory(request,id):
                                        'size':size,
                                        'color':color,
                                        'nums':nums,
-                                       'tags':tags})
+                                       'tags':tags,
+                                       'order':order})
      
 def filterBrand(request,id):
     contact_list = Product.objects.filter(brand_id=id)
@@ -155,6 +158,7 @@ def filterBrand(request,id):
     product = Product.objects.all()
     tags = Tags.objects.all()
     orderItem = OrderItem.objects.all()
+    order = Order.objects.all()
     return render(request,'shop.html',{'page_obj':page_obj,
                                        'categories':categories,
                                        'brands':brands,
@@ -163,7 +167,8 @@ def filterBrand(request,id):
                                        'size':size,
                                        'color':color,
                                        'nums':nums,
-                                       'tags':tags})
+                                       'tags':tags,
+                                       'order':order})
 
 def filterSize(request,id):
     contact_list = Product.objects.filter(size_id=id)
@@ -180,6 +185,7 @@ def filterSize(request,id):
     color = Color.objects.all()
     tags = Tags.objects.all()
     orderItem = OrderItem.objects.all()
+    order = Order.objects.all()
     return render(request,'shop.html',{'page_obj':page_obj,
                                        'categories':categories,
                                        'brands':brands,
@@ -188,7 +194,8 @@ def filterSize(request,id):
                                        'size':size,
                                        'color':color,
                                        'nums':nums,
-                                       'tags':tags})
+                                       'tags':tags,
+                                       'order':order})
 
 
 def filterColor(request):
@@ -237,6 +244,7 @@ def filterTag(request,id):
     color = Color.objects.all()
     tags = Tags.objects.all()
     orderItem = OrderItem.objects.all()
+    order = Order.objects.all()
     return render(request,'shop.html',{'page_obj':page_obj,
                                     'categories':categories,
                                     'brands':brands,
@@ -245,7 +253,8 @@ def filterTag(request,id):
                                     'size':size,
                                     'color':color,
                                     'tags':tags,
-                                    'nums':nums}) 
+                                    'nums':nums,
+                                    'order':order}) 
 
 
 def filterPrice(request):
@@ -264,6 +273,7 @@ def filterPrice(request):
     tags = Tags.objects.all()
     color = Color.objects.all()
     orderItem = OrderItem.objects.all()
+    order = Order.objects.all()
     return render(request,'shop.html',{'page_obj':page_obj,
                                        'categories':categories,
                                        'brands':brands,
@@ -272,7 +282,8 @@ def filterPrice(request):
                                        'size':size,
                                        'color':color,
                                        'nums':nums,
-                                       'tags':tags})
+                                       'tags':tags,
+                                       'order':order})
 def shopping_cart(request):
     items= ''
     if request.user.is_authenticated: 
@@ -356,22 +367,6 @@ def signout(request):
     logout(request)
     messages.success(request, "Logged Out Successfully!!")
     return redirect('index')
-# def store(request):
-#     products = Product.objects.all()
-#     context = {'products' : products}
-#     return render(request, 'shop.html',context)
-
-# def cart(request):
-#     if request.user.is_authenticated:
-#         customer = request.user
-#         order, created = Order.objects.get_or_create(customer=customer, complete=False)
-#         items = order.orderItem_set.all()
-#     else:
-#         items = []
-#         order = {'get_cart_total':0, 'get_cart_items':0 }
-#     context = {'items':items, 'order':order}
-
-#     return render(request,'shopping-cart.html',context)
 
 # def checkout(request):
 #     if request.user.is_authenticated:
@@ -384,22 +379,6 @@ def signout(request):
 #     context = {'items':items, 'order':order}
 
 #     return render(request,'shopping-cart.html',context)
-# def cart(request):
-#     items= ''
-#     print('isledim')
-#     if request.method == 'POST':
-#         if request.user.is_authenticated:
-#             print('isleyirme')
-#             customer = request.user
-#             order, created = Order.objects.get_or_create(customer=customer, complete=False)
-#             items = order.orderitem_set.all()
-#         else:
-#             print('islemirem')
-#             items = []
-#     a = Product.objects.all()
-#     context= {'items': items,'a':a}
-#     print(context)
-#     return render(request, 'shopping-cart.html', context)
 
 def updateItem(request):
     data = ''
@@ -478,6 +457,6 @@ def profile(request):
     pass
 
 def searchCategory(request):
-     pass
+    pass
 
 # Create your views here.
