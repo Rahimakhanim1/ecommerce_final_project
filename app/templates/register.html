@@ -15,15 +15,52 @@
         <link rel="stylesheet" href="{% static 'css/nice-select.css' %}" type="text/css">
         <link rel="stylesheet" href="{% static 'css/owl.carousel.min.css' %}" type="text/css">
         <link rel="stylesheet" href="{% static 'css/slicknav.min.css' %}" type="text/css">
-        <link rel="stylesheet" href="{% static 'css/style.css' %}" type="text/css">
+        <!-- <link rel="stylesheet" href="{% static 'css/style.css' %}" type="text/css"> -->
+        <style>
+            body{
+                background:rgb(216, 211, 211);
+            }
+            .message{
+                grid-column-start: 1;
+                grid-column-end:3;
+            }
+            .form-submit{
+                background-color: black !important;
+                color:white;
+                
+            }
+            form{
+                display: grid !important;
+                grid-template-columns: auto auto ;
+                gap:10px;
+            }
+            input{
+                margin:30px;
+                margin:0 !important;
+            }
+            #signup{
+                grid-column-start: 1;
+                grid-column-end: 3;
+            }
+       @media (max-width:1200px){
+            form{
+                display: flex !important;
+                flex-direction: column;
+                }
+            /* input{
+                width:100% !important;
+            } */
+       }
+        </style>
     </head>
+
     <body>
             
         <div class="login-page">
             <div class="form">
             <form class="register-form" method="POST" action="{% url 'register' %}" enctype="multipart/form-data">
                 {% csrf_token %}
-                <input type="text" placeholder="name" name='name' required/>
+                <input type="text" placeholder="name" name='name' id="name" required/>
                 <input type="text" placeholder="First name" name='firstname' required/>
                 <input type="text" placeholder="Last name" name='lastname' required/>
                 <input type="password" placeholder="password" name='password' required/>
@@ -31,11 +68,8 @@
                 <input type="text" placeholder="email address" name='email' required/>
                 <input type="tel" id="phone" name='tel' placeholder="50-340-00-00"  pattern="[0-9]{2}-[0-9]{3}-[0-9]{2}-[0-9]{2}"/>
                 <input type="text" placeholder="Address" name='address' required/>
-                <input type="file" placeholder="Your Photo" name="foto" required/>
-                <!-- <button>create</button> -->
-                <div class="form-group form-button">
-                    <input type="submit" name="signup" id="signup" class="form-submit" value="Register"/>
-                </div>
+                <input type="file" placeholder="Your Photo" name="foto" required/><br>             
+                <input type="submit" name="signup" id="signup" class="form-submit" value="Register"/>        
                 <p class="message">Already registered? <a href="{% url 'signin' %}">Sign In</a></p>
             </form>
             {% if messages %}
