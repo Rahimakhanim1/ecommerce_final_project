@@ -16,13 +16,15 @@ User = get_user_model()
 
     
 def index(request): 
+    product = Product.objects.all()[0:4]
+    product2 = Product.objects.all()[5:9]
     if request.user.is_authenticated: 
            
             customer = request.user
             order = Order.objects.get(customer=customer) 
-            return render(request,'index.html',{'order':order})
+            return render(request,'index.html',{'order':order,'product':product,'product2':product2})
     
-    return render(request,'index.html')
+    return render(request,'index.html',{'product':product,'product2':product2})
 
 def about(request):
     if request.user.is_authenticated: 

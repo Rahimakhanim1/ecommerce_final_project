@@ -105,8 +105,8 @@
             <a href="#"><img src="{% static 'img/icon/heart.png' %}" alt=""></a>
             {% if user.is_authenticated %}
                             <a href="#"><img src="{% static 'img/icon/cart.png' %}" alt=""> <span>{{order.get_cart_items}}</span></a>
-<!--                         
-                            <div class="price">${{order.get_cart_total}}</div><br> -->
+                        
+                            <div class="price">${{order.get_cart_total}}</div><br>
                         {% else %}
                             <a href="#"><img src="{% static 'img/icon/cart.png' %}" alt=""> <span>0</span></a>
                             
@@ -315,9 +315,11 @@
                 </div>
             </div>
             <div class="row product__filter">
+                {% for item in product %}
                 <div class="col-lg-3 col-md-6 col-sm-6 col-md-6 col-sm-6 mix new-arrivals">
                     <div class="product__item">
-                        <div class="product__item__pic set-bg" data-setbg="{% static 'img/product/product-1.jpg' %}">
+                        <div class="product__item__pic set-bg" >
+                            <img src="{{item.product_image.url}}">
                             <span class="label">New</span>
                             <ul class="product__hover">
                                 <li><a href="#"><img src="{% static 'img/icon/heart.png' %}" alt=""></a></li>
@@ -350,9 +352,12 @@
                         </div>
                     </div>
                 </div>
+                {% endfor %}
+                {% for item in product2 %}
                 <div class="col-lg-3 col-md-6 col-sm-6 col-md-6 col-sm-6 mix hot-sales">
                     <div class="product__item">
-                        <div class="product__item__pic set-bg" data-setbg="{% static 'img/product/product-2.jpg' %}">
+                        <div class="product__item__pic set-bg">
+                            <img src="{{item.product_image.url}}">
                             <ul class="product__hover">
                                 <li><a href="#"><img src="{% static 'img/icon/heart.png' %}" alt=""></a></li>
                                 <li><a href="#"><img src="{% static 'img/icon/compare.png' %}" alt=""> <span>Compare</span></a></li>
@@ -384,7 +389,8 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-3 col-md-6 col-sm-6 col-md-6 col-sm-6 mix new-arrivals">
+                {% endfor %}
+                <!-- <div class="col-lg-3 col-md-6 col-sm-6 col-md-6 col-sm-6 mix new-arrivals">
                     <div class="product__item sale">
                         <div class="product__item__pic set-bg" data-setbg="img/product/product-3.jpg">
                             <span class="label">Sale</span>
@@ -589,7 +595,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> -->
             </div>
         </div>
     </section>
