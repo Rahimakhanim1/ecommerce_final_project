@@ -383,31 +383,48 @@ def signout(request):
 #     return render(request,'shopping-cart.html',context)
 
 def updateItem(request):
+  
     data = ''
     productId =''
     action= ''
+    page = ''
     if request.method == 'POST':
+        print('idjnejfe')
         data = json.loads(request.body)
         productId = data['productId']
         action = data['action']
-        customer = request.user
-        product = Product.objects.get(id=productId)
-        order, created = Order.objects.get_or_create(customer=customer,complete=False)
-        orderItem, created = OrderItem.objects.get_or_create(order=order, product=product)
+        page = data['page']
+        if page == 'shop':
+            customer = request.user
+            product = Product.objects.get(id=productId)
+            order, created = Order.objects.get_or_create(customer=customer,complete=False)
+            orderItem, created = OrderItem.objects.get_or_create(order=order, product=product)
+            
+            if action == 'add':
+                orderItem.quantity = (orderItem.quantity + 1)
+            elif action == 'remove':
+                orderItem.quantity = (orderItem.quantity - 1)
+            orderItem.save()
+            
+            if orderItem.quantity <= 0:
+                orderItem.delete()
+
+            return redirect('shop')
         
-        if action == 'add':
-            orderItem.quantity = (orderItem.quantity + 1)
-        elif action == 'remove':
-            orderItem.quantity = (orderItem.quantity - 1)
-        orderItem.save()
-        
-        if orderItem.quantity <= 0:
-            orderItem.delete()
-     
+        elif(page=='index'):
+            customer = request.user
+            product = Product.objects.get(id=productId)
+            order, created = Order.objects.get_or_create(customer=customer,complete=False)
+            orderItem, created = OrderItem.objects.get_or_create(order=order, product=product)
+            
+            if action == 'add':
+                orderItem.quantity = (orderItem.quantity + 1)
+            elif action == 'remove':
+                orderItem.quantity = (orderItem.quantity - 1)
+            orderItem.save()
 
-        return redirect('shop')
-
-
+            return redirect('index')
+    
     return redirect('shop')
 
 def updateItemForShoppingCart(request):
