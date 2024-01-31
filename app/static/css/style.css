@@ -3362,6 +3362,14 @@ ol {
 	padding: 14px 35px;
 }
 
+/* info-modal section start */
+.info-modal{
+	position: absolute;
+	display: flex;
+	width:80%;
+	background-color:rgba(145, 9, 9, 0.1);
+}
+
 /*--------------------------------- Responsive Media Quaries -----------------------------*/
 
 @media only screen and (min-width: 1200px) {

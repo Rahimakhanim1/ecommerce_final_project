@@ -24,6 +24,25 @@
     <link rel="stylesheet" href="{% static 'css/slicknav.min.css' %}" type="text/css">
     <link rel="stylesheet" href="{% static 'css/style.css' %}" type="text/css">
     <style>
+        .info-modal{
+            display: none;
+            left:50%;
+            top:50%;
+            transform:translate(-50%,-50%);
+            width:80%;
+            position: absolute;
+            background-color:rgba(179, 218, 193, 0.954);
+            z-index:1000;
+}
+        .info-modal h3{
+            text-align:center;
+        }
+        .info-modal i{
+            right:0;
+            position: absolute;
+            font-size:30px;
+            cursor:pointer;
+        }
         .profile-section{
             color:white;
             margin-right:25px;
@@ -68,7 +87,10 @@
 
     <!-- Offcanvas Menu Begin -->
 
-
+    <div class="info-modal" id="info-modal">
+        <h3>You are not sign in website</h3>
+        <i id="close-info-modal" class="fa fa-close" ></i>
+    </div>
 
 
     <div class="offcanvas-menu-overlay"></div>
@@ -366,7 +388,7 @@
                         </div>
                         <div class="product__item__text">
                             <h6>{{item.prodcut_name}}</h6>
-                            <a href="{% url 'update_item'%}" class="add-cart update-cart" data-product="{{item.id}}" data-action="add" data-page="index">+ Add To Cart</a>
+                            <a href="{% url 'update_item'%}" class="add-cart update-cart" data-product="{{item.id}}" data-action="add">+ Add To Cart</a>
                             <div class="rating">
                                 <i class="fa fa-star-o"></i>
                                 <i class="fa fa-star-o"></i>

@@ -1,10 +1,21 @@
 var updateBtns = document.getElementsByClassName('update-cart')
+var infoModal = document.getElementById('info-modal')
+var closeInfoModal = document.getElementById('close-info-modal')
+console.log('rnjgkn')
+console.log(infoModal)
+
+
+
+closeInfoModal.addEventListener('click',function(){
+    infoModal.style.display = 'none'
+});
 
 for(var i = 0; i < updateBtns.length; i++){
     updateBtns[i].addEventListener('click',function(){
+        infoModal.style.display = 'flex';
         var productId = this.dataset.product
         var action = this.dataset.action
-        var page = this.dataset.page
+        var page = 'index'
         if (user==='AnonymousUser'){
             console.log('User NOT logged in')
         }else{

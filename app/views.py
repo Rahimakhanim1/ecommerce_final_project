@@ -7,6 +7,7 @@ from django.contrib.auth import authenticate,get_user_model,logout
 from .models import CustomUser
 from django.http import JsonResponse
 import json
+from django.http import HttpResponse
 from django.core.paginator import Paginator
 User = get_user_model()
 # def list_venues(request):
@@ -296,6 +297,7 @@ def shopping_cart(request):
             items = []
    
     orderItem = OrderItem.objects.all()
+    order = Order.objects.all()
     context= {'items': items,'order':order}
     return render(request, 'shopping-cart.html', context)
 
@@ -382,50 +384,50 @@ def signout(request):
 
 #     return render(request,'shopping-cart.html',context)
 
-def updateItem(request):
-  
+def updateItem(request): 
     data = ''
-    productId =''
+    productId = ''
     action= ''
     page = ''
     if request.method == 'POST':
-        print('idjnejfe')
         data = json.loads(request.body)
+        customer = request.user
         productId = data['productId']
         action = data['action']
         page = data['page']
-        if page == 'shop':
-            customer = request.user
-            product = Product.objects.get(id=productId)
-            order, created = Order.objects.get_or_create(customer=customer,complete=False)
-            orderItem, created = OrderItem.objects.get_or_create(order=order, product=product)
+        product = Product.objects.get(id=productId)
+        order, created = Order.objects.get_or_create(customer=customer,complete=False)
+        orderItem, created = OrderItem.objects.get_or_create(order=order, product=product)
             
-            if action == 'add':
-                orderItem.quantity = (orderItem.quantity + 1)
-            elif action == 'remove':
-                orderItem.quantity = (orderItem.quantity - 1)
-            orderItem.save()
-            
-            if orderItem.quantity <= 0:
-                orderItem.delete()
-
-            return redirect('shop')
+        if action == 'add':
+            orderItem.quantity = (orderItem.quantity + 1)
+        elif action == 'remove':
+            orderItem.quantity = (orderItem.quantity - 1)
+        orderItem.save()
         
-        elif(page=='index'):
-            customer = request.user
-            product = Product.objects.get(id=productId)
-            order, created = Order.objects.get_or_create(customer=customer,complete=False)
-            orderItem, created = OrderItem.objects.get_or_create(order=order, product=product)
+        if orderItem.quantity <= 0:
+            orderItem.delete()
             
-            if action == 'add':
-                orderItem.quantity = (orderItem.quantity + 1)
-            elif action == 'remove':
-                orderItem.quantity = (orderItem.quantity - 1)
-            orderItem.save()
-
-            return redirect('index')
-    
     return redirect('shop')
+        
+
+# def updateItem2(customer,productId,action): 
+#     product = Product.objects.get(id=productId)
+#     order, created = Order.objects.get_or_create(customer=customer,complete=False)
+#     orderItem, created = OrderItem.objects.get_or_create(order=order, product=product)
+        
+#     if action == 'add':
+#         orderItem.quantity = (orderItem.quantity + 1)
+#     elif action == 'remove':
+#         orderItem.quantity = (orderItem.quantity - 1)
+#     orderItem.save()
+    
+#     if orderItem.quantity <= 0:
+#         orderItem.delete()
+
+#     return HttpResponse('hello')
+  
+     
 
 def updateItemForShoppingCart(request):
     data = ''
