@@ -34,7 +34,7 @@ function updateUserOrder(productId, action,page){
        
        console.log(data)
        return data
-       location.reload()
+   
      
      
        

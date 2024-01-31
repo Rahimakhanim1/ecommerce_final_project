@@ -5,9 +5,8 @@ from django.db.models import Q
 from django.contrib.auth.models import User ,auth
 from django.contrib.auth import authenticate,get_user_model,logout
 from .models import CustomUser
-from django.http import JsonResponse
 import json
-from django.http import HttpResponse
+from django.http import HttpResponse,JsonResponse
 from django.core.paginator import Paginator
 User = get_user_model()
 # def list_venues(request):
@@ -390,25 +389,28 @@ def updateItem(request):
     action= ''
     page = ''
     if request.method == 'POST':
-        data = json.loads(request.body)
-        customer = request.user
-        productId = data['productId']
-        action = data['action']
-        page = data['page']
-        product = Product.objects.get(id=productId)
-        order, created = Order.objects.get_or_create(customer=customer,complete=False)
-        orderItem, created = OrderItem.objects.get_or_create(order=order, product=product)
+        if request.body:
+            data = json.loads(request.body)
+            customer = request.user
+            productId = data['productId']
+            action = data['action']
+            page = data['page']
+            product = Product.objects.get(id=productId)
+            order, created = Order.objects.get_or_create(customer=customer,complete=False)
+            orderItem, created = OrderItem.objects.get_or_create(order=order, product=product)
+                
+            if action == 'add':
+                orderItem.quantity = (orderItem.quantity + 1)
+            elif action == 'remove':
+                orderItem.quantity = (orderItem.quantity - 1)
+            orderItem.save()
             
-        if action == 'add':
-            orderItem.quantity = (orderItem.quantity + 1)
-        elif action == 'remove':
-            orderItem.quantity = (orderItem.quantity - 1)
-        orderItem.save()
-        
-        if orderItem.quantity <= 0:
-            orderItem.delete()
-            
-    return redirect('shop')
+            if orderItem.quantity <= 0:
+                orderItem.delete()
+                
+        return redirect('shop')
+    else:
+         return JsonResponse({'orderItem.quantity':12})
         
 
 # def updateItem2(customer,productId,action): 

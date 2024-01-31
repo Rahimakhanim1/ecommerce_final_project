@@ -12,12 +12,12 @@ closeInfoModal.addEventListener('click',function(){
 
 for(var i = 0; i < updateBtns.length; i++){
     updateBtns[i].addEventListener('click',function(){
-        infoModal.style.display = 'flex';
         var productId = this.dataset.product
         var action = this.dataset.action
         var page = 'index'
         if (user==='AnonymousUser'){
-            console.log('User NOT logged in')
+            infoModal.style.display = 'flex';
+            console.log('yoxsaann')
         }else{
             updateUserOrder(productId,action,page)
         }
@@ -46,7 +46,7 @@ function updateUserOrder(productId,action,page){
        
        console.log(data)
        return data
-       location.reload()
+   
      
      
        
