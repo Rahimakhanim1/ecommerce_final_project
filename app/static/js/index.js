@@ -1,6 +1,7 @@
 var updateBtns = document.getElementsByClassName('update-cart')
 var infoModal = document.getElementById('info-modal')
 var closeInfoModal = document.getElementById('close-info-modal')
+var info = document.getElementById('info')
 console.log('rnjgkn')
 console.log(infoModal)
 
@@ -27,7 +28,7 @@ for(var i = 0; i < updateBtns.length; i++){
 function updateUserOrder(productId,action,page){
     console.log('User is logged 16')
 
-    var url = 'http://127.0.0.1:8003/update_item/'
+    var url = '/update_item/'
 
     fetch(url, {
         method: 'POST',
@@ -36,8 +37,13 @@ function updateUserOrder(productId,action,page){
             'X-CSRFToken':csrftokenIndex,
         },
         body: JSON.stringify({
-            'productId': productId,'action':action,'page':page})
-    })
+            'productId': productId,'action':action,'page':page}),
+            
+        success: function(dataa){
+                info.innerHTML(dataa)
+            }
+        
+        })
     .then((response)=>{
         return response.json()
     })
@@ -52,4 +58,5 @@ function updateUserOrder(productId,action,page){
        
     })
 }
+
 

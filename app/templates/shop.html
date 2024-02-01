@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Male-Fashion | Template</title>
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700;800;900&display=swap"
     rel="stylesheet">
@@ -74,7 +74,7 @@
     <!-- <div id="preloder">
         <div class="loader"></div>
     </div> -->
-
+    <h1 id="info">aa</h1>
     <!-- Offcanvas Menu Begin -->
     <div class="offcanvas-menu-overlay"></div>
     <div class="offcanvas-menu-wrapper">
@@ -603,6 +603,19 @@
    
     const csrftoken = getCookie('csrftoken');
 
+    
+$('.update-cart').on('click',function(){
+    $.ajax({
+        url:$('bu hisseni bilmedim'),
+        type: "GET",
+        success: function(resp){
+            $('#info').html(resp);
+        }
+    })
+    
+});
+   
+   
 
 
     </script>

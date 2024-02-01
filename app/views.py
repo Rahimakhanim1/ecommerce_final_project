@@ -410,7 +410,7 @@ def updateItem(request):
                 
         return redirect('shop')
     else:
-         return JsonResponse({'orderItem.quantity':12})
+         return HttpResponse('okeydir')
         
 
 # def updateItem2(customer,productId,action): 
