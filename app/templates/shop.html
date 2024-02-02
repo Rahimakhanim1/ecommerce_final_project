@@ -583,38 +583,161 @@
     <script src="{% static 'js/cart.js'%}"></script>
     <script type="text/javascript">
         var user = '{{request.user}}';
-  
-    
+
         function getCookie(name) {
-        let cookieValue = null;
-        if (document.cookie && document.cookie !== '') {
-        const cookies = document.cookie.split(';');
-        for (let i = 0; i < cookies.length; i++) {
-            const cookie = cookies[i].trim();
-            // Does this cookie string begin with the name we want?
-            if (cookie.substring(0, name.length + 1) === (name + '=')) {
-                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                break;
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
             }
-        }
     }
-    return cookieValue;
+            return cookieValue;
 }
    
-    const csrftoken = getCookie('csrftoken');
-
+    const csrftokenShop = getCookie('csrftoken');
     
-$('.update-cart').on('click',function(){
-    $.ajax({
-        url:$('bu hisseni bilmedim'),
-        type: "GET",
-        success: function(resp){
-            $('#info').html(resp);
+var updateBtns = document.getElementsByClassName('update-cart')
+
+for(var i = 0; i < updateBtns.length; i++){
+    updateBtns[i].addEventListener('click',function(){
+        var productId = this.dataset.product
+        var action = this.dataset.action
+        var page = 'shop'
+        if (user==='AnonymousUser'){
+            console.log('User NOT logged in')
+        }else{
+            console.log('isledim')
+            $.ajax({ 
+            type:'POST', 
+            url:'{% url "update_item" %}', 
+            data: 
+            { 
+                productId:productId, 
+                action:action,
+                csrfmiddlewaretoken:csrftokenShop
+            }, 
+            success:function(){ 
+                  document.getElementById('info').innerHTML= ' yazildi'; 
+                    } 
+            }
+            ) 
         }
     })
+}
+
+
+// $('.update-cart').on('click',function(){ 
+//     var productId = this.dataset.product
+//         var action = this.dataset.action
+//         e.preventDefault(); 
+//         $.ajax({ 
+//             type:'POST', 
+//             url:'{% url "update_item" %}', 
+//             data: 
+//             { 
+//                 productId:productId, 
+//                 action:action,
+//                 csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val() 
+//             }, 
+//             success:function(){ 
+//                   document.getElementById('info').innerHTML= ' yazildi'; 
+//                     } 
+//             }
+//             ) 
+// }); 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//         var user = '{{request.user}}';
+  
     
-});
+//         function getCookie(name) {
+//         let cookieValue = null;
+//         if (document.cookie && document.cookie !== '') {
+//         const cookies = document.cookie.split(';');
+//         for (let i = 0; i < cookies.length; i++) {
+//             const cookie = cookies[i].trim();
+//             if (cookie.substring(0, name.length + 1) === (name + '=')) {
+//                 cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+//                 break;
+//             }
+//         }
+//     }
+//     return cookieValue;
+// }
    
+//     const csrftoken = getCookie('csrftoken');
+
+    
+//     for(var i = 0; i < updateBtns.length; i++){
+//     updateBtns[i].addEventListener('click',function(){
+//         var productId = this.dataset.product
+//         var action = this.dataset.action
+//         var page = 'shop'
+//         if (user==='AnonymousUser'){
+//             console.log('User NOT logged in')
+//         }else{
+//             updateUserOrder(productId,action,page)
+//         }
+//     })
+// }
+// $(document).on('click',function(){
+//     var productId = $('.update-cart').dataset.product
+//     var action = $('.update-cart').dataset.action
+//     var page = 'shop'
+//     if (user==='AnonymousUser'){
+//         console.log('User NOT logged in')
+//     }else{
+   
+//     var formData = {
+//         'productId': productId,
+//         'action': action
+//     };
+
+//     // Send AJAX request
+//     $.ajax({
+//         type: 'POST',
+//         url: '/shop/',  // Adjust the URL as per your project structure
+//         data: {'formData':formData,
+//         'csrfmiddlewaretoken': $('[name="csrfmiddlewaretoken"]').val()   
+//     },
+//         success: function (response) {
+//             if (response.status === 'success') {
+//                 console.log('yess')
+              
+//             } else {
+//                 alert('Error adding patient');
+//             }
+//         },
+//         error: function () {
+//             alert('Error adding patient');
+//         }
+//     });
+//     }
+// });
+
    
 
 

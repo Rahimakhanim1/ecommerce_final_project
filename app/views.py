@@ -382,6 +382,9 @@ def signout(request):
 #     context = {'items':items, 'order':order}
 
 #     return render(request,'shopping-cart.html',context)
+def test(request):
+     
+     return render(request,'test.html')
 
 def updateItem(request): 
     data = ''
@@ -389,6 +392,7 @@ def updateItem(request):
     action= ''
     page = ''
     if request.method == 'POST':
+        print('salam')
         if request.body:
             data = json.loads(request.body)
             customer = request.user
@@ -407,10 +411,35 @@ def updateItem(request):
             
             if orderItem.quantity <= 0:
                 orderItem.delete()
-                
-        return redirect('shop')
-    else:
-         return HttpResponse('okeydir')
+    contact_list = Product.objects.all()
+    paginator = Paginator(contact_list, 5) 
+    page_number = request.GET.get("page")
+    page_obj = paginator.get_page(page_number)
+    nums = []
+    for i in range(1,page_obj.paginator.num_pages+1):
+         nums.append(i)
+    categories = Categories.objects.all()
+    brands = Brands.objects.all()
+    product = Product.objects.all()
+    orderItem = OrderItem.objects.all()
+    size = Size.objects.all()
+    color = Color.objects.all()
+    tags = Tags.objects.all()
+    order = Order.objects.all()
+         
+    return render(request,'shop.html',{'nums':nums,
+                                                'page_obj': page_obj,
+                                                'product':product,
+                                                'categories':categories,
+                                                'brands':brands,
+                                                'order':order,
+                                                'OrderItem':orderItem,
+                                                'size':size,
+                                                'color':color,
+                                                'tags':tags})
+
+   
+ 
         
 
 # def updateItem2(customer,productId,action): 

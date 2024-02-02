@@ -17,7 +17,7 @@ urlpatterns = [
     path('register/',views.register,name='register'),
     path('index/',views.signout,name='signout'),
     path('profile/',views.profile,name='profile'),
-    path('shop/',views.updateItem,name="update_item"),
+    path('update_item/',views.updateItem,name="update_item"),
     path('update_item_shopping_cart/',views.updateItemForShoppingCart,name="update_item_shopping_cart"),
     path('item_delete/',views.itemDelete,name='item-delete'),
     path('filterCategory<int:id>',views.filterCategory,name='filter-category'),
@@ -25,7 +25,8 @@ urlpatterns = [
     path('filterSize<int:id>',views.filterSize,name='filter-size'),
     path('filterColor/',views.filterColor,name='filter-color'),
     path('filterTag<int:id>/',views.filterTag,name='filter-tag'),
-    path('filterPrice/',views.filterPrice,name='filter-price')
+    path('filterPrice/',views.filterPrice,name='filter-price'),
+    path('test/',views.test,name="test")
 
 
     # path('shop/<int:id>', views.filterCat, name='filterCat'),
