@@ -265,7 +265,7 @@
                                         </div>
                                     </td>
                                     <td class="cart__price">$ {{item.get_total}}</td>
-                                    <td class="cart__close"><a href="{% url 'item-delete' %}" class="update-cart" data-product='{{item.product.id}}' data-action="remove"><i class="fa fa-close"></i></a></td>
+                                    <td class="cart__close"><a href="{% url 'item-delete' item.product.id %}" class="update-cart" data-product='{{item.product.id}}' data-action="remove"><i class="fa fa-close"></i></a></td>
                                 </tr>
                                 {% endfor %}
                                 <!-- <tr>

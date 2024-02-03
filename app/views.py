@@ -93,20 +93,9 @@ def shop(request):
     tags = Tags.objects.all()
     order = Order.objects.all()
     if request.user.is_authenticated: 
-
             customer = request.user
             order = Order.objects.get(customer=customer)
-          
-            return render(request,'shop.html',{'nums':nums,
-                                                'page_obj': page_obj,
-                                                'product':product,
-                                                'categories':categories,
-                                                'brands':brands,
-                                                'order':order,
-                                                'OrderItem':orderItem,
-                                                'size':size,
-                                                'color':color,
-                                                'tags':tags})    
+           
     return render(request,'shop.html',{'nums':nums,
                                        'page_obj': page_obj,
                                        'product':product,
@@ -286,6 +275,7 @@ def filterPrice(request):
                                        'nums':nums,
                                        'tags':tags,
                                        'order':order})
+
 def shopping_cart(request):
     items= ''
     if request.user.is_authenticated: 
@@ -295,9 +285,8 @@ def shopping_cart(request):
     else:
             items = []
    
-    orderItem = OrderItem.objects.all()
-    order = Order.objects.all()
-    context= {'items': items,'order':order}
+    orderItem = OrderItem.objects.filter(order=order)
+    context= {'items': items,'order':order,'OrderItem':orderItem}
     return render(request, 'shopping-cart.html', context)
 
 def sign_in(request):
@@ -387,57 +376,60 @@ def test(request):
      return render(request,'test.html')
 
 def updateItem(request): 
-    data = ''
-    productId = ''
-    action= ''
-    page = ''
-    if request.method == 'POST':
-        print('salam')
-        if request.body:
-            data = json.loads(request.body)
-            customer = request.user
-            productId = data['productId']
-            action = data['action']
-            page = data['page']
-            product = Product.objects.get(id=productId)
-            order, created = Order.objects.get_or_create(customer=customer,complete=False)
-            orderItem, created = OrderItem.objects.get_or_create(order=order, product=product)
-                
-            if action == 'add':
-                orderItem.quantity = (orderItem.quantity + 1)
-            elif action == 'remove':
-                orderItem.quantity = (orderItem.quantity - 1)
-            orderItem.save()
-            
-            if orderItem.quantity <= 0:
-                orderItem.delete()
+    customer = request.user
+    order = Order.objects.get(customer=customer)
+    print(customer)
+    orderItem = OrderItem.objects.all()
     contact_list = Product.objects.all()
     paginator = Paginator(contact_list, 5) 
     page_number = request.GET.get("page")
     page_obj = paginator.get_page(page_number)
     nums = []
     for i in range(1,page_obj.paginator.num_pages+1):
-         nums.append(i)
+        nums.append(i)
     categories = Categories.objects.all()
     brands = Brands.objects.all()
     product = Product.objects.all()
-    orderItem = OrderItem.objects.all()
     size = Size.objects.all()
     color = Color.objects.all()
     tags = Tags.objects.all()
-    order = Order.objects.all()
-         
-    return render(request,'shop.html',{'nums':nums,
-                                                'page_obj': page_obj,
-                                                'product':product,
-                                                'categories':categories,
-                                                'brands':brands,
-                                                'order':order,
-                                                'OrderItem':orderItem,
-                                                'size':size,
-                                                'color':color,
-                                                'tags':tags})
-
+    data = ''
+    productId = ''
+    action= ''
+    page = ''
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        customer = request.user
+        productId = data['productId']
+        action = data['action']
+        page = data['page']
+        product = Product.objects.get(id=productId)
+        order, created = Order.objects.get_or_create(customer=customer,complete=False)
+        orderItem, created = OrderItem.objects.get_or_create(order=order, product=product)
+            
+        if action == 'add':
+            orderItem.quantity = (orderItem.quantity + 1)
+        elif action == 'remove':
+            orderItem.quantity = (orderItem.quantity - 1)
+        orderItem.save()
+        
+        if orderItem.quantity <= 0:
+            orderItem.delete()
+     
+    
+    return redirect('shopping-cart')       
+    # return render(request,'shopping-cart.html',{'nums':nums,
+    #                                     'page_obj': page_obj,
+    #                                     'product':product,
+    #                                     'categories':categories,
+    #                                     'brands':brands,
+    #                                     'size':size,
+    #                                     'color':color,
+    #                                     'tags':tags,
+    #                                     'order':order,
+    #                                     'OrderItem':orderItem})
+    
+    
    
  
         
@@ -491,17 +483,13 @@ def updateItemForShoppingCart(request):
     product = Product.objects.all()
     return redirect('shopping-cart')
 
-def itemDelete(request):
-    if request.method == 'POST':
-        data = json.loads(request.body)
-        productId = data['productId']
-        action = data['action']
-        if action=='remove':
-            customer = request.user
-            product = Product.objects.get(id=productId)
-            order = Order.objects.get(customer=customer)
-            orderItem = OrderItem.objects.get(order=order,product=product)
-            orderItem.delete()
+def itemDelete(request,id):  
+        
+    customer = request.user
+    product = Product.objects.get(id=id)
+    order = Order.objects.get(customer=customer)
+    orderItem = OrderItem.objects.get(order=order,product=product)
+    orderItem.delete()
     return redirect('shopping-cart')
     # return render(request, 'shopping-cart.html')
 
