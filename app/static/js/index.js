@@ -1,11 +1,5 @@
 var updateBtns = document.getElementsByClassName('update-cart')
-var infoModal = document.getElementById('info-modal')
-var closeInfoModal = document.getElementById('close-info-modal')
-var info = document.getElementById('info')
-
-closeInfoModal.addEventListener('click',function(){
-    infoModal.style.display = 'none'
-});
+var list = [].slice.call(document.getElementsByClassName("update-cart"))
 
 for(var i = 0; i < updateBtns.length; i++){
     updateBtns[i].addEventListener('click',function(){
@@ -13,8 +7,14 @@ for(var i = 0; i < updateBtns.length; i++){
         var action = this.dataset.action
         var page = 'index'
         if (user==='AnonymousUser'){
-            infoModal.style.display = 'flex';
-            console.log('yoxsaann')
+            list.map(function(item){
+                item.onclick = function() {
+              var toastElList = [].slice.call(document.querySelectorAll('.toast'))
+              var toastList = toastElList.map(function(toastEl) {
+                return new bootstrap.Toast(toastEl)
+              })
+              toastList.forEach(toast => toast.show()) 
+            }})
         }else{
             updateUserOrder(productId,action,page)
         }
