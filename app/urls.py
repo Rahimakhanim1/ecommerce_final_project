@@ -26,7 +26,7 @@ urlpatterns = [
     path('filterColor/',views.filterColor,name='filter-color'),
     path('filterTag<int:id>/',views.filterTag,name='filter-tag'),
     path('filterPrice/',views.filterPrice,name='filter-price'),
-    path('test/',views.test,name="test")
+    path('search/',views.searchItem,name='search-item')
 
 
     # path('shop/<int:id>', views.filterCat, name='filterCat'),

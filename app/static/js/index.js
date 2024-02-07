@@ -20,33 +20,31 @@ for(var i = 0; i < updateBtns.length; i++){
         }
     })
 }
-function updateUserOrder(productId,action,page){
-    var url = '/update_item/'
-    fetch(url, {
-        method: 'POST',
-        headers: {
-            'Content-Type':'application/json',
-            'X-CSRFToken':csrftokenIndex,
-        },
-        body: JSON.stringify({
-            'productId': productId,'action':action,'page':page}),
+// function updateUserOrder(productId,action,page){
+//     var url = '/update_item/'
+//     fetch(url, {
+//         method: 'POST',
+//         headers: {
+//             'Content-Type':'application/json',
+//             'X-CSRFToken':csrftokenIndex,
+//         },
+//         body: JSON.stringify({
+//             'productId': productId,'action':action,'page':page}),
             
-        success: function(dataa){
-                info.innerHTML(dataa)
-            }
+//         success: function(dataa){
+//                 info.innerHTML(dataa)
+//             }
         
-        })
-    .then((response)=>{
-        return response.json()
-    })
+//         })
+//     .then((response)=>{
+//         return response.json()
+//     })
 
-    .then((data) =>{
+//     .then((data) =>{
        
-       console.log(data)
-       return data
+//        console.log(data)
+//        return data
    
-    })
-}
-
-
+//     })
+// }
 

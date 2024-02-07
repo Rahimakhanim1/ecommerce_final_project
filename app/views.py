@@ -12,8 +12,37 @@ User = get_user_model()
 # def list_venues(request):
 #      venue_list = Venue.objects.all()
 
-     
-
+def searchItem(request):
+    categories = Categories.objects.all()
+    brands = Brands.objects.all()
+    product = Product.objects.all()
+    orderItem = OrderItem.objects.all()
+    size = Size.objects.all()
+    color = Color.objects.all()
+    tags = Tags.objects.all()
+    order = Order.objects.all()
+    nums = []
+    value=''
+    if request.method == 'POST':
+        value = request.POST["item"]
+    contact_list = Product.objects.filter(product_name__icontains=value)
+    print(type(contact_list))
+    paginator = Paginator(contact_list, 3) 
+    page_number = request.GET.get("page")
+    page_obj = paginator.get_page(page_number)
+    
+    for i in range(1,page_obj.paginator.num_pages+1):
+        nums.append(i)
+    return render(request,'shop.html',{'nums':nums,
+                                       'page_obj': page_obj,
+                                       'product':product,
+                                       'categories':categories,
+                                       'brands':brands,
+                                       'order':order,
+                                       'OrderItem':orderItem,
+                                       'size':size,
+                                        'color':color,
+                                        'tags':tags})
     
 def index(request): 
     product = Product.objects.all()[0:4]
