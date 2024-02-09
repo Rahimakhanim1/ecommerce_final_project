@@ -5,6 +5,21 @@ class Categories(models.Model):
 
     def __str__(self):
         return self.category
+    
+    @property
+    def get_ca(self):
+        # lst = []
+        # products = self.product_set.all()
+        # for item in products:
+        #     count = 0
+        #     lst.append(item)
+            # for product in products:
+            #     if item.id == product.category:
+            #         count+=1
+            # lst.append({item:count})
+        return 'salam'
+
+
 class Size(models.Model):
     size = models.CharField(max_length = 50,null = True)
     def __str__(self):
@@ -70,10 +85,15 @@ class Order(models.Model):
    
     @property 
     def get_cart_items(self):
+        total = 0
         orderitems = self.orderitem_set.all()
-        total = sum([item.quantity for item in orderitems])
+        total = len(orderitems)
         return total 
-
+    
+    @property 
+    def rahima(self):
+        return self.customer
+    
 class OrderItem(models.Model):
     product = models.ForeignKey(Product, on_delete=models.DO_NOTHING, blank=True,null=False)
     order = models.ForeignKey(Order, on_delete=models.SET_NULL, blank=True, null=True)

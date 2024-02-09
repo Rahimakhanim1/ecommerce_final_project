@@ -8,12 +8,17 @@ from .models import CustomUser
 import json
 from django.http import HttpResponse,JsonResponse
 from django.core.paginator import Paginator
+from itertools import chain
+
+
+
 User = get_user_model()
 # def list_venues(request):
 #      venue_list = Venue.objects.all()
 
 def searchItem(request):
     categories = Categories.objects.all()
+
     brands = Brands.objects.all()
     product = Product.objects.all()
     orderItem = OrderItem.objects.all()
@@ -25,8 +30,10 @@ def searchItem(request):
     value=''
     if request.method == 'POST':
         value = request.POST["item"]
-    contact_list = Product.objects.filter(product_name__icontains=value)
-    print(type(contact_list))
+        
+    contact_list= list(chain(Product.objects.filter(product_name__icontains=value), Categories.objects.filter(category__icontains=value)))
+        
+    print(contact_list)
     paginator = Paginator(contact_list, 3) 
     page_number = request.GET.get("page")
     page_obj = paginator.get_page(page_number)
@@ -41,8 +48,8 @@ def searchItem(request):
                                        'order':order,
                                        'OrderItem':orderItem,
                                        'size':size,
-                                        'color':color,
-                                        'tags':tags})
+                                       'color':color,
+                                       'tags':tags})
     
 def index(request): 
     product = Product.objects.all()[0:4]
