@@ -17,6 +17,8 @@ User = get_user_model()
 #      venue_list = Venue.objects.all()
 
 def searchItem(request):
+    brand_item =''
+    category_item=''
     categories = Categories.objects.all()
 
     brands = Brands.objects.all()
@@ -30,11 +32,22 @@ def searchItem(request):
     value=''
     if request.method == 'POST':
         value = request.POST["item"]
-        
-    contact_list= list(chain(Product.objects.filter(product_name__icontains=value), Categories.objects.filter(category__icontains=value)))
+    search_in_brand = Brands.objects.filter(brand__icontains=value)
+    search_in_category = Categories.objects.filter(category__icontains=value)
+  
+    if search_in_brand:
+        for i in search_in_brand:
+            brand_item = Product.objects.filter(brand_id = i.id)    
+    if search_in_category:
+         for i in search_in_category:
+            category_item = Product.objects.filter(category_id = i.id)  
+
+
+
+    contact_list= list(chain(Product.objects.filter(product_name__icontains=value),brand_item,category_item ))
         
     print(contact_list)
-    paginator = Paginator(contact_list, 3) 
+    paginator = Paginator(contact_list, 10) 
     page_number = request.GET.get("page")
     page_obj = paginator.get_page(page_number)
     
@@ -320,9 +333,9 @@ def shopping_cart(request):
             items = order.orderitem_set.all()
     else:
             items = []
-   
-    orderItem = OrderItem.objects.filter(order=order)
-    context= {'items': items,'order':order,'OrderItem':orderItem}
+            order = Order.objects.all()
+            # orderItem = OrderItem.objects.filter(order=order)
+    context= {'items': items,'order':order}
     return render(request, 'shopping-cart.html', context)
 
 def sign_in(request):
