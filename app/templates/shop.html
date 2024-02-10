@@ -616,8 +616,11 @@
     <div class="search-model">
         <div class="h-100 d-flex align-items-center justify-content-center">
             <div class="search-close-switch">+</div>
-            <form class="search-model-form">
-                <input type="text" id="search-input" placeholder="Search here.....">
+            <form class="search-model-form"  method="post" action="{% url 'search-item' %}" >
+                {% csrf_token %}
+                <input type="text" name="item" id="search-input" placeholder="Search here.....">
+                <button id="search-btn" class="btn bg-light" type="submit" style="font-size:30px;">Search</button>
+
             </form>
         </div>
     </div>
@@ -633,7 +636,7 @@
     <script src="{% static 'js/jquery.slicknav.js' %}"></script>
     <script src="{% static 'js/mixitup.min.js' %}"></script>
     <script src="{% static 'js/owl.carousel.min.js' %}"></script>
-    <!-- <script src="{% static 'js/main.js' %}"></script> -->
+    <script src="{% static 'js/main.js' %}"></script>
     <script src="{% static 'js/cart.js'%}"></script>
     <script type="text/javascript">
    

@@ -9,18 +9,11 @@ import json
 from django.http import HttpResponse,JsonResponse
 from django.core.paginator import Paginator
 from itertools import chain
-
-
-
 User = get_user_model()
-# def list_venues(request):
-#      venue_list = Venue.objects.all()
-
 def searchItem(request):
     brand_item =''
     category_item=''
     categories = Categories.objects.all()
-
     brands = Brands.objects.all()
     product = Product.objects.all()
     orderItem = OrderItem.objects.all()
@@ -237,7 +230,6 @@ def filterSize(request,id):
                                        'tags':tags,
                                        'order':order})
 
-
 def filterColor(request):
     print('isledim')
     if request.method == 'POST':
@@ -267,8 +259,6 @@ def filterColor(request):
                                         'size':size,
                                         'color':color}) 
 
-
-
 def filterTag(request,id):
     contact_list = Product.objects.filter(tags_id=id)
     paginator = Paginator(contact_list, 3) 
@@ -296,9 +286,7 @@ def filterTag(request,id):
                                     'nums':nums,
                                     'order':order}) 
 
-
 def filterPrice(request):
-    print('isledim')
     contact_list = Product.objects.order_by('product_price')
     paginator = Paginator(contact_list, 2) 
     page_number = request.GET.get("page")
@@ -403,7 +391,6 @@ def register(request):
     
     return render(request,"register.html")
 
-
 def signout(request):
     logout(request)
     messages.success(request, "Logged Out Successfully!!")
@@ -420,14 +407,9 @@ def signout(request):
 #     context = {'items':items, 'order':order}
 
 #     return render(request,'shopping-cart.html',context)
-def test(request):
-     
-     return render(request,'test.html')
-
 def updateItem(request): 
     customer = request.user
     order = Order.objects.get(customer=customer)
-    print(customer)
     orderItem = OrderItem.objects.all()
     contact_list = Product.objects.all()
     paginator = Paginator(contact_list, 5) 
@@ -477,30 +459,7 @@ def updateItem(request):
     #                                     'tags':tags,
     #                                     'order':order,
     #                                     'OrderItem':orderItem})
-    
-    
-   
- 
-        
-
-# def updateItem2(customer,productId,action): 
-#     product = Product.objects.get(id=productId)
-#     order, created = Order.objects.get_or_create(customer=customer,complete=False)
-#     orderItem, created = OrderItem.objects.get_or_create(order=order, product=product)
-        
-#     if action == 'add':
-#         orderItem.quantity = (orderItem.quantity + 1)
-#     elif action == 'remove':
-#         orderItem.quantity = (orderItem.quantity - 1)
-#     orderItem.save()
-    
-#     if orderItem.quantity <= 0:
-#         orderItem.delete()
-
-#     return HttpResponse('hello')
   
-     
-
 def updateItemForShoppingCart(request):
     data = ''
     productId =''
@@ -532,8 +491,7 @@ def updateItemForShoppingCart(request):
     product = Product.objects.all()
     return redirect('shopping-cart')
 
-def itemDelete(request,id):  
-        
+def itemDelete(request,id):      
     customer = request.user
     product = Product.objects.get(id=id)
     order = Order.objects.get(customer=customer)
