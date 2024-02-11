@@ -18,7 +18,6 @@ urlpatterns = [
     path('index/',views.signout,name='signout'),
     path('profile/',views.profile,name='profile'),
     path('update_item/',views.updateItem,name="update_item"),
-    path('update_item_shopping_cart/',views.updateItemForShoppingCart,name="update_item_shopping_cart"),
     path('item_delete/<int:id>',views.itemDelete,name='item-delete'),
     path('filterCategory<int:id>',views.filterCategory,name='filter-category'),
     path('filterBrand<int:id>',views.filterBrand,name='filter-brand'),
@@ -26,6 +25,7 @@ urlpatterns = [
     path('filterColor/',views.filterColor,name='filter-color'),
     path('filterTag<int:id>/',views.filterTag,name='filter-tag'),
     path('filterPrice/',views.filterPrice,name='filter-price'),
+    path('filterForPrice<int:data>',views.filterForPrice,name='filter-for-price'),
     path('search/',views.searchItem,name='search-item')
 
 
