@@ -8,24 +8,42 @@ $('.update-item-value').on('click',function(){
             return new bootstrap.Toast(toastEl)
           })
           toastList.forEach(toast => toast.show()) 
-        }})
+        }})}
     else{
     let data = {
-        'items': [
-           
+        'items': [     
         ]
     }   
-    updateCart.forEach( function(item){  
+    updateCart.forEach(function(item){  
         data.items.push(
             {
                 "itemId":item.name,
                 "itemValue":item.value,
-            }
-        )
-       
-     })
-    }
-   
+            })
+        })
+    updateItemValue(data)
+    }  
 })
 
 
+function updateItemValue(changedValue){
+    var url = '/update_cart/'
+    fetch(url, {
+        method: 'POST',
+        headers: {
+            'Content-Type':'application/json',
+            'X-CSRFToken':csrftoken2,
+        },
+        body: JSON.stringify({
+            'data':changedValue}),     
+        })
+    .then((response)=>{
+        return response.json()
+    })
+
+    .then((data) =>{
+       
+       return data
+   
+    })
+}

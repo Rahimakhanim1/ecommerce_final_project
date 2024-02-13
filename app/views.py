@@ -490,7 +490,6 @@ def updateItem(request):
         customer = request.user
         productId = data['productId']
         action = data['action']
-        page = data['page']
         product = Product.objects.get(id=productId)
         order, created = Order.objects.get_or_create(customer=customer,complete=False)
         orderItem, created = OrderItem.objects.get_or_create(order=order, product=product)
@@ -533,6 +532,16 @@ def profile(request):
 def searchCategory(request):
     pass
 def update_cart_value(request):
+    customer = request.user
+    if request.method == "POST":
+        data = json.loads(request.body)
+        for item in data['data']['items']:
+            product = Product.objects.get(id=item['itemId'])
+            order, created = Order.objects.get_or_create(customer=customer,complete=False)
+            orderItem, created = OrderItem.objects.get_or_create(order=order, product=product)
+            orderItem.quantity = item['itemValue']
+            orderItem.save()
+         
    
     
     return redirect('shopping-cart')
