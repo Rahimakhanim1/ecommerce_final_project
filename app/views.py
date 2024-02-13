@@ -532,5 +532,9 @@ def profile(request):
 
 def searchCategory(request):
     pass
-
+def update_cart_value(request):
+   
+    
+    return redirect('shopping-cart')
+          
 # Create your views here.

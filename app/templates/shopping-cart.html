@@ -246,8 +246,7 @@
                             </thead>
                             <tbody>
                                 {% if user.is_authenticated %}
-                                {% for item in items%}
-                                
+                                {% for item in items%}                                
                                 <tr>
                                     <td class="product__cart__item">
                                         <div class="product__cart__item__pic">
@@ -260,9 +259,8 @@
                                     </td>
                                     <td class="quantity__item">
                                         <div class="quantity">
-                                            <div class="pro-qty-2">
-                                            
-                                                <input type="text" value="{{item.quantity}}">
+                                            <div class="pro-qty-2">                                 
+                                                <input class="item-quantity" type="number" value="{{item.quantity}}" name="{{item.product.id}}">  
                                             </div>
                                         </div>
                                     </td>
@@ -285,7 +283,7 @@
                         </div>
                         <div class="col-lg-6 col-md-6 col-sm-6">
                             <div class="continue__btn update__btn">
-                                <a href="#"><i class="fa fa-spinner"></i> Update cart</a>
+                                <a href="#" class="update-item-value"><i class="fa fa-spinner"></i> Update cart</a>
                             </div>
                         </div>
                     </div>

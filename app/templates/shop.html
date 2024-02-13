@@ -33,7 +33,7 @@
             position: absolute;
             background-color:rgba(179, 218, 193, 0.954);
             z-index:1000;
-}
+        }
         .info-modal h3{
             text-align:center;
         }
@@ -436,27 +436,24 @@
                                     <p>Sort by Price:</p>
                                     <a href="{% url 'filter-price' %}" style="color:black" class="filter-price"> Low To High</a>
                                  
-                                    <select>
+                                    <!-- <select>
                                         
                                         <option value="">$0 - $55</option>
                                         <option value="">$55 - $100</option>
-                                    </select>
+                                    </select> -->
                           
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="row">
-                    {% if page_obj%}
-                     
+                    {% if page_obj%}                    
                         {% for item in page_obj %}
-                        <div class="col-lg-4 col-md-6 col-sm-6">
-                           
+                        <div class="col-lg-4 col-md-6 col-sm-6">                           
                             <div class="product__item sale">
                                 <div class="product__item__pic set-bg" >
-                                    <img src="{{item.product_image.url}}">
-                    
-                                    <span class="label">Sale</span>
+                                    <img src="{{item.product_image.url}}">                
+                                    <!-- <span class="label">Sale</span> -->
                                     <ul class="product__hover">
                                         <li><a href="#"><img src="{% static 'img/icon/heart.png' %}" alt=""></a></li>
                                         <li><a href="#"><img src="{% static 'img/icon/compare.png' %}" alt=""> <span>Compare</span></a>

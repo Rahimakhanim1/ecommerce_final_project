@@ -62,9 +62,9 @@
 
 <body>
     <!-- Page Preloder -->
-    <div id="preloder">
+    <!-- <div id="preloder">
         <div class="loader"></div>
-    </div>
+    </div> -->
 
     <!-- Offcanvas Menu Begin -->
     <div class="offcanvas-menu-overlay"></div>
@@ -311,6 +311,7 @@
                                 placeholder="Notes about your order, e.g. special notes for delivery.">
                             </div>
                         </div>
+                        {% if user.is_authenticated %}
                         <div class="col-lg-4 col-md-6">
                             <div class="checkout__order">
                                 <h4 class="order__title">Your order</h4>
@@ -319,13 +320,10 @@
                                     {% for item in items %}
                                         <li>{{forloop.counter}}. {{item.product.product_name}} <span>$ {{item.product.product_price}} </span></li>
                                     {% endfor %}
-                                    <!-- <li>02. German chocolate <span>$ 170.0</span></li>
-                                    <li>03. Sweet autumn <span>$ 170.0</span></li>
-                                    <li>04. Cluten free mini dozen <span>$ 110.0</span></li> -->
                                 </ul>
                                 <ul class="checkout__total__all">
                                     <li>Subtotal <span>${{order.get_cart_total}}</span></li>
-                                    <li>Total <span>${{order.get_cart_total}}9</span></li>
+                                    <li>Total <span>${{order.get_cart_total}}</span></li>
                                 </ul>
                                 <div class="checkout__input__checkbox">
                                     <label for="acc-or">
@@ -353,6 +351,45 @@
                                 <button type="submit" class="site-btn">PLACE ORDER</button>
                             </div>
                         </div>
+                        {% else %}
+                        <div class="col-lg-4 col-md-6">
+                            <div class="checkout__order">
+                                <h4 class="order__title">Your order</h4>
+                                <div class="checkout__order__products">Product <span>Total</span></div>
+                                <ul class="checkout__total__products">                                 
+                                        <li> <span>$0 </span></li>                                  
+                                </ul>
+                                <ul class="checkout__total__all">
+                                    <li>Subtotal <span>$0</span></li>
+                                    <li>Total <span>$0</span></li>
+                                </ul>
+                                <div class="checkout__input__checkbox">
+                                    <label for="acc-or">
+                                        Create an account?
+                                        <input type="checkbox" id="acc-or">
+                                        <span class="checkmark"></span>
+                                    </label>
+                                </div>
+                                <p>Lorem ipsum dolor sit amet, consectetur adip elit, sed do eiusmod tempor incididunt
+                                ut labore et dolore magna aliqua.</p>
+                                <div class="checkout__input__checkbox">
+                                    <label for="payment">
+                                        Check Payment
+                                        <input type="checkbox" id="payment">
+                                        <span class="checkmark"></span>
+                                    </label>
+                                </div>
+                                <div class="checkout__input__checkbox">
+                                    <label for="paypal">
+                                        Paypal
+                                        <input type="checkbox" id="paypal">
+                                        <span class="checkmark"></span>
+                                    </label>
+                                </div>
+                                <button type="submit" class="site-btn">PLACE ORDER</button>
+                            </div>
+                        </div>
+                        {% endif %}
                     </div>
                 </form>
             </div>
@@ -415,7 +452,7 @@
                         <p>Copyright ©
                             <script>
                                 document.write(new Date().getFullYear());
-                            </script>2020
+                            </script>
                             All rights reserved | This template is made with <i class="fa fa-heart-o"
                             aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
                         </p>

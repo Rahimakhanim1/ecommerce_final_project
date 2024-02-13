@@ -26,7 +26,8 @@ urlpatterns = [
     path('filterTag<int:id>/',views.filterTag,name='filter-tag'),
     path('filterPrice/',views.filterPrice,name='filter-price'),
     path('filterForPrice<int:data>',views.filterForPrice,name='filter-for-price'),
-    path('search/',views.searchItem,name='search-item')
+    path('search/',views.searchItem,name='search-item'),
+    path('update_cart/',views.update_cart_value,name='update-cart-value')
 
 
     # path('shop/<int:id>', views.filterCat, name='filterCat'),
