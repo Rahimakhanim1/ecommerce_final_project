@@ -9,6 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Male-Fashion | Template</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700;800;900&display=swap"
@@ -65,7 +66,19 @@
     <!-- <div id="preloder">
         <div class="loader"></div>
     </div> -->
-
+    <!-- cart update info begin -->
+    <div class="container position-absolute z-index-1000 mt-5">
+        <div class="toast bg-secondary" data-delay="10000" id="toast">
+        <div class="toast-header">
+            <strong class="me-auto fs-5">Message</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="toast"></button>
+        </div>
+        <div class="toast-body text-white">
+            <p class="fs-5">You aren't signed in</p>
+        </div>
+        </div>
+    </div>
+    <!-- cart update info end -->
 
     <!-- Offcanvas Menu Begin -->
     <div class="offcanvas-menu-overlay"></div>
@@ -283,7 +296,9 @@
                         </div>
                         <div class="col-lg-6 col-md-6 col-sm-6">
                             <div class="continue__btn update__btn">
+                            
                                 <a href="#" class="update-item-value"><i class="fa fa-spinner"></i> Update cart</a>
+
                             </div>
                         </div>
                     </div>

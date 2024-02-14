@@ -9,6 +9,11 @@ import json
 from django.http import HttpResponse,JsonResponse
 from django.core.paginator import Paginator
 from itertools import chain
+from .forms import CheckoutForm
+from .models import CheckoutAddress
+from django.views.generic import View
+from django.core.exceptions import ObjectDoesNotExist
+
 User = get_user_model()
 def searchItem(request):
     brand_item =''
@@ -399,11 +404,8 @@ def sign_in(request):
    
     return render(request,'signin.html')
             
-def register(request):
-    
+def register(request):   
     if request.method == 'POST':
-        
-
         username = request.POST["name"]
         first_name = request.POST["firstname"]
         foto = request.FILES["foto"]
@@ -418,10 +420,7 @@ def register(request):
         for i in tel:
             if i.isnumeric():
                 correct_tel+=i
-        correct_tel=int(correct_tel)
-
-
-        
+        correct_tel=int(correct_tel)   
         if pass1 == pass2:
             
             if CustomUser.objects.filter(username=username).exists():
@@ -475,16 +474,10 @@ def updateItem(request):
     nums = []
     for i in range(1,page_obj.paginator.num_pages+1):
         nums.append(i)
-    categories = Categories.objects.all()
-    brands = Brands.objects.all()
     product = Product.objects.all()
-    size = Size.objects.all()
-    color = Color.objects.all()
-    tags = Tags.objects.all()
     data = ''
     productId = ''
     action= ''
-    page = ''
     if request.method == 'POST':
         data = json.loads(request.body)
         customer = request.user
@@ -505,17 +498,6 @@ def updateItem(request):
      
     
     return redirect('shopping-cart')       
-    # return render(request,'shopping-cart.html',{'nums':nums,
-    #                                     'page_obj': page_obj,
-    #                                     'product':product,
-    #                                     'categories':categories,
-    #                                     'brands':brands,
-    #                                     'size':size,
-    #                                     'color':color,
-    #                                     'tags':tags,
-    #                                     'order':order,
-    #                                     'OrderItem':orderItem})
-  
 
 def itemDelete(request,id):      
     customer = request.user
@@ -539,11 +521,52 @@ def update_cart_value(request):
             product = Product.objects.get(id=item['itemId'])
             order, created = Order.objects.get_or_create(customer=customer,complete=False)
             orderItem, created = OrderItem.objects.get_or_create(order=order, product=product)
-            orderItem.quantity = item['itemValue']
-            orderItem.save()
-         
+            if int(item['itemValue'])>0:
+                orderItem.quantity = item['itemValue']
+                orderItem.save()
+            else:
+                orderItem.delete()
    
     
     return redirect('shopping-cart')
           
-# Create your views here.
+
+class CheckoutView(View):
+    def get(self, *args, **kwargs):
+        form = CheckoutForm()
+        context = {
+            'form': form
+        }
+        return render(self.request, 'checkout.html', context)
+
+    def post(self, *args, **kwargs):
+        form = CheckoutForm(self.request.POST or None)
+        
+        try:
+            order = Order.objects.get(user=self.request.user, ordered=False)
+            if form.is_valid():
+                street_address = form.cleaned_data.get('street_address')
+                apartment_address = form.cleaned_data.get('apartment_address')
+                country = form.cleaned_data.get('country')
+                zip = form.cleaned_data.get('zip')
+                same_billing_address = form.cleaned_data.get('same_billing_address')
+                save_info = form.cleaned_data.get('save_info')
+                payment_option = form.cleaned_data.get('payment_option')
+
+                checkout_address = CheckoutAddress(
+                    user=self.request.user,
+                    street_address=street_address,
+                    apartment_address=apartment_address,
+                    country=country,
+                    zip=zip
+                )
+                checkout_address.save()
+                order.checkout_address = checkout_address
+                order.save()
+                return redirect('core:checkout')
+            messages.warning(self.request, "Failed Chekout")
+            return redirect('core:checkout')
+
+        except ObjectDoesNotExist:
+            messages.error(self.request, "You do not have an order")
+            return redirect("core:order-summary")

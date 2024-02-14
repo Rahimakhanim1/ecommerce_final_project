@@ -1,5 +1,6 @@
 from django.urls import path
 from . import views
+from .views import CheckoutView
 
 
 urlpatterns = [
@@ -27,7 +28,8 @@ urlpatterns = [
     path('filterPrice/',views.filterPrice,name='filter-price'),
     path('filterForPrice<int:data>',views.filterForPrice,name='filter-for-price'),
     path('search/',views.searchItem,name='search-item'),
-    path('update_cart/',views.update_cart_value,name='update-cart-value')
+    path('update_cart/',views.update_cart_value,name='update-cart-value'),
+    path('checkout', CheckoutView.as_view(), name='checkout'),
 
 
     # path('shop/<int:id>', views.filterCat, name='filterCat'),
